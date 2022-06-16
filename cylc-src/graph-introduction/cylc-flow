@@ -3,6 +3,5 @@
 [scheduling]
     [[graph]]
         R1 = """
-            a & c => b => d & f
-            d => e
+            setup => rivers & drains & lidar => dem => roughness
         """
