@@ -13,8 +13,10 @@ cd cylc-src/graph-introduction # This should contain a cylc-flow file
 
 # Load cylc
 module purge
-pip3 install cylc-flow --user
+module load Miniconda3/4.12.0
+conda install -c conda-forge cylc-flow
 
+# Create a cylc graph from the cylc-flow file
 cylc graph .
 
 ```
