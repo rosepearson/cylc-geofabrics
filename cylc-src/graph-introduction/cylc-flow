@@ -1,0 +1,8 @@
+[scheduler]
+    allow implicit tasks = True
+[scheduling]
+    [[graph]]
+        R1 = """
+            a & c => b => d & f
+            d => e
+        """
