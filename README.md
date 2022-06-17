@@ -8,7 +8,7 @@ The following instructions are for getting the environment setup for a fresh run
 
 ```
 # Move to the project
-cd /nesi/project/nesi/niwa03440/Cylc-GeoFabrics
+cd /nesi/project/niwa03440/Cylc-GeoFabrics
 cd cylc-src/graph-introduction # This should contain a cylc-flow file
 
 # Load cylc
