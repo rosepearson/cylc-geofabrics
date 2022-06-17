@@ -7,14 +7,14 @@
         """
 [runtime]
     [[setup]]
-        script = echo 'setup'
+        script = python -c 'import setup; setup.main()'
     [[rivers]]
-        script = echo 'rivers'
+        script = python -c 'import rivers; rivers.main()'
     [[drains]]
-        script = echo 'drains'
+        script = python -c 'import drains; drains.main()'
     [[lidar]]
-        script = echo 'lidar'
+        script = python -c 'import lidar; lidar.main()'
     [[dem]]
-        script = echo 'dem'
+        script = python -c 'import dem; dem.main()'
     [[roughness]]
-        script = echo 'roughness'
+        script = python -c 'import roughness; roughness.main()'
