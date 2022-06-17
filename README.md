@@ -22,6 +22,6 @@ export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
 export CYLC_VERSION=8.0rc3
 
 # Create a cylc graph from the cylc-flow file
-cylc graph .
+cylc graph . -o graph.png
 
 ```
