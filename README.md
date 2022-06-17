@@ -16,6 +16,7 @@ module purge
 module load Anaconda3
 export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
 export CYLC_VERSION=8.0rc3
+export PROJECT=niwa03440
 ```
 
 # Basic Scheduling
@@ -29,5 +30,23 @@ cd cylc-src/graph-introduction # This should contain a cylc-flow file
 
 # Create a cylc graph from the cylc.flow file
 cylc graph . -o graph.png
+
+```
+
+# Waikanae
+The following is an example for creating a geofabric for Waikanae
+
+```
+# Move to the waikanae example
+cd /nesi/project/niwa03440/Cylc-GeoFabrics/cylc-src/waikanae
+
+# Create a cylc graph from the cylc.flow file
+cylc graph . -o graph.png
+
+# Install and run the cylc file
+cylc validate . # Check for errors and correct as needed
+cylc install
+cylc play waikanae
+
 
 ```

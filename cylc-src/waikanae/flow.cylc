@@ -5,3 +5,18 @@
         R1 = """
             setup => rivers & drains & lidar => dem => roughness
         """
+[runtime]
+    [[root]]
+        script = setup
+    [[setup]]
+        script = python -c 'import setup; setup.main()'
+    [[rivers]]
+        script = python -c 'import rivers; rivers.main()'
+    [[drains]]
+        script = python -c 'import drains; drains.main()'
+    [[lidar]]
+        script = python -c 'import lidar; lidar.main()'
+    [[dem]]
+        script = python -c 'import dem; dem.main()'
+    [[roughness]]
+        script = python -c 'import roughness; roughness.main()'
