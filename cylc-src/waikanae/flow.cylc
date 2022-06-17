@@ -6,6 +6,8 @@
             setup => rivers & drains & lidar => dem => roughness
         """
 [runtime]
+    [[root]]
+        script = setup
     [[setup]]
         script = python -c 'import setup; setup.main()'
     [[rivers]]
