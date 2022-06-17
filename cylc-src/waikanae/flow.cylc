@@ -1,0 +1,7 @@
+[scheduler]
+    allow implicit tasks = True
+[scheduling]
+    [[graph]]
+        R1 = """
+            setup => rivers & drains & lidar => dem => roughness
+        """
