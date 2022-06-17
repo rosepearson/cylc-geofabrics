@@ -5,3 +5,16 @@
         R1 = """
             setup => rivers & drains & lidar => dem => roughness
         """
+[runtime]
+    [[setup]]
+        script = echo 'setup'
+    [[rivers]]
+        script = echo 'rivers'
+    [[drains]]
+        script = echo 'drains'
+    [[lidar]]
+        script = echo 'lidar'
+    [[dem]]
+        script = echo 'dem'
+    [[roughness]]
+        script = echo 'roughness'
