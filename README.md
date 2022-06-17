@@ -44,7 +44,7 @@ cd /nesi/project/niwa03440/Cylc-GeoFabrics/cylc-src/waikanae
 cylc graph . -o graph.png
 
 # Install and run the cylc file
-cylc validate # Check for errors and correct as needed
+cylc validate . # Check for errors and correct as needed
 cylc install
 cylc play waikanae
 
