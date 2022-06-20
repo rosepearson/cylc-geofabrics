@@ -64,7 +64,7 @@ cylc play waikanae
 # Todo
 * [ ] Waiting on geopais and geofabrics to be added to conda-forge so that they can be installed easily as part of a conda package. See [PR](https://github.com/conda-forge/staged-recipes/pull/19342)
   * The alternative is to create a Conda environment with a yml file with install from a git repository for both geoapis and geofabrics before running cylc
-* [ ] Add instructions for creating the conda environment
-* [ ] Upload a test and full sized catchment file
+* [x] Add instructions for creating the conda environment. __Still to test__
+* [x] Upload a test and full sized catchment file
 * [x] Add a .env file containing the API keys for downloading vector data from LINZ to NeSI. This should not be put under version control
 * [ ] Populate the python scripts controlling each of the cylc tasks. 
