@@ -8,7 +8,7 @@ This is designed to run on the NeSI HPC. Basic [NeSI help](https://support.nesi.
 Currently Cylc 8 only works on Maui. For detailed instructions and worked examples for using Cylc 8 on Maui see [Cylc 8 on Maui - One NIWA](https://one.niwa.co.nz/pages/viewpage.action?spaceKey=HPCF&title=Cylc+8+on+Maui)
 
 ## First time setup
-You will need an ssh key without a password and add it to your authorized_keys file to allow ssh forwarding without a password being entred. 
+You will need an ssh key without a password and add it to your authorized_keys file to allow ssh forwarding without a password being entred.
 
 To do this run the following and press entre when prompted to entre a password. Ask Hilary if you run into problems.
 
@@ -28,6 +28,16 @@ module load Anaconda3
 export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
 export CYLC_VERSION=8.0rc3
 export PROJECT=niwa03440
+```
+
+### Conda environment setup
+Currently this relies on an a conda environment being created before running cylc. In future this may be done as part of the setup stage. See this [link](https://gist.github.com/matthewrmshin/74a7b78adecd297b40e64f6c867b316b) for an example.
+
+```
+# Setup conda environment
+cd /nesi/project/niwa03440/Cylc-GeoFabrics
+conda env create -f environment.yml
+
 ```
 
 # Basic Scheduling
@@ -57,7 +67,7 @@ cylc graph . -o graph.png
 # Install and run the cylc file
 cylc validate . # Check for errors and correct as needed
 cylc install
-cylc play waikanae 
+cylc play waikanae
 
 # View outputs while `cylc cat-log -f o waikanae//runN/setup` is fixed
 cat /home/pearsonra/cylc-run/waikanae/runN/log/job/1/setup/NN/job.out
@@ -73,4 +83,4 @@ cylc clean waikanae
 * [x] Add instructions for creating the conda environment. __Still to test__
 * [x] Upload a test and full sized catchment file
 * [x] Add a .env file containing the API keys for downloading vector data from LINZ to NeSI. This should not be put under version control
-* [ ] Populate the python scripts controlling each of the cylc tasks. 
+* [ ] Populate the python scripts controlling each of the cylc tasks.
