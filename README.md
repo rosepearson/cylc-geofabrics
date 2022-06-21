@@ -10,7 +10,7 @@ Currently Cylc 8 only works on Maui. For detailed instructions and worked exampl
 ## First time setup
 You will need an ssh key without a password and add it to your authorized_keys file to allow ssh forwarding without a password being entred.
 
-To do this run the following and press entre when prompted to entre a password. Ask Hilary if you run into problems.
+To do this run the following and press entre when prompted to entre a password. Note you will need all folders only to have read access and you will need to set the authorized_keys to be read only as well. Ask Hilary if you run into problems.
 
 ```
 ssh-keygen
