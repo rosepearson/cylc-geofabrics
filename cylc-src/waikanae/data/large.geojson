@@ -1,7 +1,3 @@
-{
-"type": "FeatureCollection",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2193" } },
-"features": [
-{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 1765084.115199999883771, 5456290.291299999691546 ], [ 1765084.115199999883771, 5480108.791299999691546 ], [ 1786076.615199999883771, 5480108.791299999691546 ], [ 1786076.615199999883771, 5456290.291299999691546 ], [ 1765084.115199999883771, 5456290.291299999691546 ] ] ] } }
-]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:aa74da71e6cb43000b7b73d56714c1b8edde0c461d4775ebc83fdb137202c267
+size 508
