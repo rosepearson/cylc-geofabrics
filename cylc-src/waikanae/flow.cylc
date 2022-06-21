@@ -10,17 +10,17 @@
         script = """conda activate --stack cylc-geofabrics
                     python -c 'import setup; setup.main()'"""
     [[rivers]]
-        script = """
+        script = """conda activate --stack cylc-geofabrics
                     python -c 'import rivers; rivers.main()'"""
     [[drains]]
-        script = """
+        script = """conda activate --stack cylc-geofabrics
                     python -c 'import drains; drains.main()'"""
     [[lidar]]
-        script = """
+        script = """conda activate --stack cylc-geofabrics
                     python -c 'import lidar; lidar.main()'"""
     [[dem]]
-        script = """
+        script = """conda activate --stack cylc-geofabrics
                     python -c 'import dem; dem.main()'"""
     [[roughness]]
-        script = """
+        script = """conda activate --stack cylc-geofabrics
                     python -c 'import roughness; roughness.main()'"""
