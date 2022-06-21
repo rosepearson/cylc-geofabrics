@@ -44,7 +44,7 @@ cylc graph . -o graph.png
 
 ```
 
-# Waikanae-simple
+# Waikanae
 The following is a shell example for creating a geofabric for Waikanae. At this stage it just prints "running xx" for each stage.
 
 ```
@@ -58,6 +58,12 @@ cylc graph . -o graph.png
 cylc validate . # Check for errors and correct as needed
 cylc install
 cylc play waikanae 
+
+# View outputs while `cylc cat-log -f o waikanae//runN/setup` is fixed
+cat /home/pearsonra/cylc-run/waikanae/runN/log/job/1/setup/NN/job.out
+
+# Clean runs
+cylc clean waikanae
 
 ```
 
