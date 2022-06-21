@@ -7,7 +7,6 @@ channels:
 dependencies:
   - pip
   - pip:
-    - git+https://github.com/niwa/geoapis
-    - git+https://github.com/niwa/geofabrics
+    - geoapis>=0.2.8
 
 prefix: 
