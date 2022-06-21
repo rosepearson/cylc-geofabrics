@@ -116,7 +116,7 @@
 		},
 		"data_paths": {
 		  "local_cache": "",
-		  "catchment_boundary": "catchment.geojson",
+		  "catchment_boundary": "small.geojson",
 		  "raw_dem": "raw_dem.nc",
 		  "river_polygons": ["river_polygon.geojson",
 							 "fan_polygon.geojson",
@@ -173,7 +173,7 @@
 		},
 		"data_paths": {
 		  "local_cache": "tests/test_all_bathymetry_into_dem_wellington_with_roughness/data",
-		  "catchment_boundary": "catchment.geojson",
+		  "catchment_boundary": "small.geojson",
 		  "result_dem": "test_dem.nc",
 		  "result_geofabric": "test_geofabric.nc",
 		  "benchmark_geofabric": "benchmark_geofabric.nc"
