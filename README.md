@@ -40,6 +40,8 @@ conda env create -f environment.yml
 
 ```
 
+A note on removing environments if they need to be recreated: `conda remove --name ēnv_name --all`
+
 # Basic Scheduling
 The following is an example for a very basic scheduler
 
