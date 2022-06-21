@@ -1,9 +1,6 @@
-# YML file for setting up a virtual environment for creating geofabrics
-
-name: geofabrics
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - pip
-  - geofabrics
+#!/bin/bash
+#------------------------------------------------------------------------------
+# This script is used to activate a preexisting conda environment
+# ------------------------------------------------------------------------------
+# Note: "conda" does not work with "set -u"
+conda activate --stack cylc-geofabrics
