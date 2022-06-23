@@ -12,6 +12,6 @@ dependencies:
   - python-pdal # Not on PyPI so needs to be added here and not through pip geofabrics
   - pip:
     - geoapis>=0.2.8
-    - geofabrics==0.9.3
+    - geofabrics>=0.9.3
 
 prefix: 

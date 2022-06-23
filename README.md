@@ -47,7 +47,7 @@ conda env create -f environment.yml
 
 ```
 
-A note on removing environments if they need to be recreated: `conda remove --name env_name --all`
+A note on removing environments if they need to be recreated: `conda remove --name geofabrics --all`
 
 
 # Waikanae
