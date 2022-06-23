@@ -76,7 +76,7 @@
 		"data_paths": {
 			"local_cache": "",
 			"subfolder": "results",
-			"catchment_boundary": "small.geojson"
+			"catchment_boundary": "large.geojson"
 		},
 		"apis": {
 			"open_topography": {
@@ -118,7 +118,7 @@
 		"data_paths": {
 			"local_cache": "",
 			"subfolder": "results",
-			"catchment_boundary": "small.geojson",
+			"catchment_boundary": "large.geojson",
 			"raw_dem": "raw_dem.nc",
 			"river_polygons": ["river_polygon.geojson",
 							   "fan_polygon.geojson",
@@ -176,7 +176,7 @@
 		"data_paths": {
 			"local_cache": "",
 			"subfolder": "results",
-			"catchment_boundary": "small.geojson",
+			"catchment_boundary": "large.geojson",
 			"result_dem": "hydrological_dem.nc",
 			"result_geofabric": "hydrological_geofabric.nc"
 		},

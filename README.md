@@ -51,6 +51,8 @@ A note on removing environments if they need to be recreated: `conda remove --na
 
 
 # Waikanae
+If you want to try things out without running over the full Waikanae catchment, you can change the instruction.json file to read in the "small.json" instead of the "large.geojson" catchment_boundary file.
+
 ## Running
 The following is a shell example for running the cylc workflow for creating a geofabric for Waikanae. 
 
