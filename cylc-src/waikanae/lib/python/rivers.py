@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-Run rivers
+Run the geofabrics.processor.RiverBathymetryGenerator pipeline
 """
+
 import json
 import pathlib
 import dotenv
 import os
-#import geofabrics
+#import geofabrics.processor
 
 def main():
     """ The rivers.main function updates sets the LINZ API keys, reads the
     instruction file in, and runs the geofabrics rivers processing pipeline.
+    This pipeline generates drain bathymetry information to be read into
+    the geofabrics HydrologicDemGenerator pipeline.
     """
 
-    print('Run rivers!')
+    print('Run the rivers task!')
 
     # Setup the paths
     base_path = pathlib.Path().cwd().parent.parent.parent
@@ -27,7 +30,7 @@ def main():
         instructions = json.load(file_pointer)
 
     # Launch the geofabrics processing routine
-    '''runner = processor.RiverBathymetryGenerator(
+    '''runner = geofabrics.processor.RiverBathymetryGenerator(
         cls.instructions["rivers"], debug=False
     )'''
 
