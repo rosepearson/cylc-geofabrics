@@ -5,13 +5,11 @@ Run the geofabrics.processor.RawLidarDemGenerator pipeline
 
 import json
 import pathlib
-import dotenv
-import os
 import geofabrics.processor
 
 def main():
-    """ The lidar.main function updates sets the LINZ API keys, reads the
-    instruction file in, and runs the geofabrics lidar processing pipeline.
+    """ The lidar.main function reads the instruction file in, and
+    runs the geofabrics.processor.RawLidarDemGenerator pipeline.
     This pipeline generates a raw LiDAR DEM to be read into the geofabrics
     HydrologicDemGenerator pipeline.
     """
@@ -20,10 +18,6 @@ def main():
 
     # Setup the paths
     base_path = pathlib.Path().cwd().parent.parent.parent
-
-    # Setup the LINZ API keys
-    dotenv.load_dotenv(base_path / ".env")
-    linz_key = os.environ.get("LINZ_API", None)
 
     # Read in the instruction file
     with open(base_path / "instruction.json", "r") as file_pointer:

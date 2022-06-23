@@ -5,6 +5,8 @@ Run setup - download needed LiDAR files
 
 import json
 import pathlib
+import dotenv
+import os
 import geoapis
 import geoapis.lidar
 import geopandas
@@ -54,6 +56,16 @@ def main():
     instructions["rivers"]["rivers"]["flow_file"] = str(
         cache_path / instructions["rivers"]["rivers"]["flow_file"]
     )
+
+    ## Load in the LINZ API key and add to the instruction file
+    # Load the LINZ API keys
+    dotenv.load_dotenv(base_path / ".env")
+    linz_key = os.environ.get("LINZ_API", None)
+    # Add the LINZ API key
+    instructions["rivers"]["apis"]["linz"]["key"] = linz_key
+    instructions["drains"]["apis"]["linz"]["key"] = linz_key
+    instructions["dem"]["apis"]["linz"]["key"] = linz_key
+    instructions["roughness"]["apis"]["linz"]["key"] = linz_key
 
     ## Save the amended instructions in cylc run cache
     with open(base_path / "instruction.json", "w") as file_pointer:
