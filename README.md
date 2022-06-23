@@ -35,7 +35,8 @@ export CYLC_VERSION=8.0rc3
 export PROJECT=niwa03440
 ```
 
-## Conda environment setup
+## Conda environment setup 
+__Only need to run this the first time__
 Currently this relies on an a conda environment being created before running cylc. In future this may be done as part of the setup stage. See this [link](https://gist.github.com/matthewrmshin/74a7b78adecd297b40e64f6c867b316b) for an example.
 
 Execute the following in the bash terminal. Check there are no errors.
