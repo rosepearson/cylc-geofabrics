@@ -10,10 +10,9 @@ import geopandas
 
 def main():
     print('Run setup!')
-    print(pathlib.Path().cwd())
     
     # define paths
-    base_path = pathlib.Path().cwd().parent.parent.parent
+    base_path = pathlib.Path().cwd().parent.parent.parent # pathlib.Path().cwd() # Uncomment for running directly (not through cylc)
     data_path = base_path / "data"
     
     # read in the instruction file
@@ -21,19 +20,18 @@ def main():
         instructions = json.load(file_pointer)
     crs = instructions["rivers"]["output"]["crs"]["horizontal"]
     
-    # amend and save back out
+    # amend cache path, and rivers paths and save back out
     
     # load in catchment
     catchment = geopandas.read_file(data_path / "small.geojson")
-    catchment.set_crs(crs, inplace=True, allow_override=True) # Note tempoarary while env setup correctly. CRS not being read in correctly
-    print(catchment.crs)
-    print(catchment.bounds)
-    print(instructions["dem"]["data_paths"]["catchment_boundary"])
+    catchment.set_crs(crs, inplace=True, allow_override=True) # Explicitly override as CRS isn't being read in correctly.
     
     # load in LiDAR files
+    print('Download LiDAR files')
     lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=data_path, 
                                                  search_polygon=catchment, verbose=True)
     lidar_fetcher.run("Wellington_2013")
+    print('Finished setup!')
     
     
 

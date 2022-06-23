@@ -7,20 +7,20 @@
         """
 [runtime]
     [[setup]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """conda activate --stack geofabrics
                     python -c 'import setup; setup.main()'"""
     [[rivers]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """conda activate --stack geofabrics
                     python -c 'import rivers; rivers.main()'"""
     [[drains]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """conda activate --stack geofabrics
                     python -c 'import drains; drains.main()'"""
     [[lidar]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """conda activate --stack geofabrics
                     python -c 'import lidar; lidar.main()'"""
     [[dem]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """conda activate --stack geofabrics
                     python -c 'import dem; dem.main()'"""
     [[roughness]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """conda activate --stack geofabrics
                     python -c 'import roughness; roughness.main()'"""

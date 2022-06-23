@@ -39,7 +39,7 @@ Execute the following in the bash terminal. Check there are no errors.
 
 ```
 # Setup conda environment
-cd /nesi/project/niwa03440/Cylc-GeoFabrics
+cd /nesi/project/niwa03440/Cylc-GeoFabrics/cylc-src
 conda env create -f environment.yml
 
 ```
@@ -62,6 +62,8 @@ cylc install
 cylc play waikanae
 
 # View outputs while `cylc cat-log -f o waikanae//runN/setup` is fixed
+cylc cat-log -f e waikanae//1/setup # Error output
+cylc cat-log -f o waikanae//1/setup # Output
 cat /home/pearsonra/cylc-run/waikanae/runN/log/job/1/setup/NN/job.out
 
 # Clean runs
