@@ -54,8 +54,8 @@
 			"channel_rec_id": 9253579,
 			"cross_section_spacing": 10,
 			"min_bank_height": 0.75,
-			"rec_file": "rec2_4_rivers.geojson",
-			"flow_file": "flow_and_friction.csv.gz"
+			"rec_file": "rec2_3_rivers.geojson",
+			"flow_file": "rec2_3_flow_and_friction.csv.gz"
 		}
 	},
 	"drains":
