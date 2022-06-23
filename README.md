@@ -20,6 +20,9 @@ ssh-keygen
 cat ~/.ssh/id_ssh_rsa.pub >> ~/.ssh/authorized_keys`
 ```
 
+## LINZ API key
+The LINZ Data Service (LDS) requires an API key. This is stored in a `.env` file in `Cylc-GeoFabrics/cylc-src/waikanae/.env` on NeSI, but it is not versioned as that would be a security risk. Refer to [this page](https://github.com/rosepearson/GeoFabrics/wiki/Testing-and-GitHub-Actions) if you need to generate a new `.env` file.
+
 # Session setup
 The following instructions are for getting Cylc 8 setup for a fresh session. Open a fresh bash terminal and run the following.
 
@@ -46,15 +49,14 @@ conda env create -f environment.yml
 
 A note on removing environments if they need to be recreated: `conda remove --name env_name --all`
 
-## Running Waikanae
-The following is a shell example for running the cylc workflow for creating a geofabric for Waikanae. It is still a work in progress. I currently downloads the required LiDAR files before exiting the setup stage with an error relating to the environment setup.
+
+# Waikanae
+## Running
+The following is a shell example for running the cylc workflow for creating a geofabric for Waikanae. 
 
 ```
 # Move to the waikanae example
 cd /nesi/project/niwa03440/Cylc-GeoFabrics/cylc-src/waikanae
-
-# Create a cylc graph from the cylc.flow file
-cylc graph . -o graph.png
 
 # Install, run and monitor the cylc workflow
 cylc validate . # Check for errors and correct as needed
@@ -72,13 +74,12 @@ cylc clean waikanae
 
 ```
 
-## Basic Scheduling
-The following is an example for a very basic scheduler
+## Scheduler info
+The following will generate a png of the Waikanae Cylc workflow
 
 ```
 # Move to the project and basic scheduling example
-cd /nesi/project/niwa03440/Cylc-GeoFabrics
-cd cylc-src/graph-introduction # This should contain a cylc-flow file
+cd /nesi/project/niwa03440/Cylc-GeoFabrics/cylc-src/waikanae
 
 
 # Create a cylc graph from the cylc.flow file
@@ -89,9 +90,9 @@ cylc graph . -o graph.png
 # Todo
 * [ ] Create a conda environment file for creating an environment for running geofabrics
   * [X] Create an environment for running geoapis
-  * [ ] Extend the geoapis environment for also running geofabrics
+  * [X] Extend the geoapis environment for also running geofabrics
 * [X] Update the flow.cylc to activate the geoapis/geofabrics conda environment
-* [ ] Update the python scripts for each task to call through to the relevant geofabrics functionality
+* [X] Update the python scripts for each task to call through to the relevant geofabrics functionality
 
 ## Later / Already done
 * [ ] Waiting on geopais and geofabrics to be added to conda-forge so that they can be installed easily as part of a conda package. See [PR](https://github.com/conda-forge/staged-recipes/pull/19342)
@@ -99,4 +100,4 @@ cylc graph . -o graph.png
 * [x] Add instructions for creating the conda environment. __Still to test__
 * [x] Upload a test and full sized catchment file
 * [x] Add a .env file containing the API keys for downloading vector data from LINZ to NeSI. This should not be put under version control
-* [ ] Populate the python scripts controlling each of the cylc tasks.
+* [X] Populate the python scripts controlling each of the cylc tasks.

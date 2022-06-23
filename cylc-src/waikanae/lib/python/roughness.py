@@ -25,7 +25,7 @@ def main():
 
     # Launch the geofabrics processing routine
     runner = geofabrics.processor.RoughnessLengthGenerator(
-        instructions["roughness"], debug=False
+        instructions["roughness"]
     )
     runner.run()
 
