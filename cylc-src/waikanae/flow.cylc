@@ -7,20 +7,44 @@
         """
 [runtime]
     [[setup]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """# See bin/nesi-conda-install for details on what the following lines do
+                    set +u
+                    conda activate geofabrics
+                    set -u
+                    # Run Python script
                     python -c 'import setup; setup.main()'"""
     [[rivers]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """# See bin/nesi-conda-install for details on what the following lines do
+                    set +u
+                    conda activate geofabrics
+                    set -u
+                    # Run Python script
                     python -c 'import rivers; rivers.main()'"""
     [[drains]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """# See bin/nesi-conda-install for details on what the following lines do
+                    set +u
+                    conda activate geofabrics
+                    set -u
+                    # Run Python script
                     python -c 'import drains; drains.main()'"""
     [[lidar]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """# See bin/nesi-conda-install for details on what the following lines do
+                    set +u
+                    conda activate geofabrics
+                    set -u
+                    # Run Python script
                     python -c 'import lidar; lidar.main()'"""
     [[dem]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """# See bin/nesi-conda-install for details on what the following lines do
+                    set +u
+                    conda activate geofabrics
+                    set -u
+                    # Run Python script
                     python -c 'import dem; dem.main()'"""
     [[roughness]]
-        script = """conda activate --stack cylc-geofabrics
+        script = """# See bin/nesi-conda-install for details on what the following lines do
+                    set +u
+                    conda activate geofabrics
+                    set -u
+                    # Run Python script
                     python -c 'import roughness; roughness.main()'"""

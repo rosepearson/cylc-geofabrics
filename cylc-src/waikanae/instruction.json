@@ -52,10 +52,11 @@
 			"width_centre_smoothing": 10,
 			"channel_area_threshold": 141000000,
 			"channel_rec_id": 9253579,
+            "osm_id": 132793862,
 			"cross_section_spacing": 10,
 			"min_bank_height": 0.75,
-			"rec_file": "rec2_4_rivers.geojson",
-			"flow_file": "flow_and_friction.csv.gz"
+			"rec_file": "rec2_3_rivers.geojson",
+			"flow_file": "rec2_3_flow_and_friction.csv.gz"
 		}
 	},
 	"drains":
@@ -75,7 +76,8 @@
 		},
 		"data_paths": {
 			"local_cache": "",
-			"catchment_boundary": "catchment.geojson"
+			"subfolder": "results",
+			"catchment_boundary": "large.geojson"
 		},
 		"apis": {
 			"open_topography": {
@@ -115,18 +117,19 @@
 			"number_of_cores": 2
 		},
 		"data_paths": {
-		  "local_cache": "",
-		  "catchment_boundary": "small.geojson",
-		  "raw_dem": "raw_dem.nc",
-		  "river_polygons": ["river_polygon.geojson",
-							 "fan_polygon.geojson",
-							 "closed_drain_polygon_5m_width.geojson",
-							 "open_drain_polygon_5m_width.geojson"],
+			"local_cache": "",
+			"subfolder": "results",
+			"catchment_boundary": "large.geojson",
+			"raw_dem": "raw_dem.nc",
+			"river_polygons": ["river_polygon.geojson",
+							   "fan_polygon.geojson",
+							   "closed_drain_polygon_5m_width.geojson",
+							   "open_drain_polygon_5m_width.geojson"],
 			"river_bathymetry": ["river_bathymetry.geojson",
 								 "fan_bathymetry.geojson",
 								 "closed_drain_elevation_5m_width.geojson",
 								 "open_drain_elevation_5m_width.geojson"],
-		  "result_dem": "test_dem.nc"
+			"result_dem": "hydrological_dem.nc"
 		},
 		"apis": {
 			"open_topography": {
@@ -172,11 +175,11 @@
 			"number_of_cores": 2
 		},
 		"data_paths": {
-		  "local_cache": "tests/test_all_bathymetry_into_dem_wellington_with_roughness/data",
-		  "catchment_boundary": "small.geojson",
-		  "result_dem": "test_dem.nc",
-		  "result_geofabric": "test_geofabric.nc",
-		  "benchmark_geofabric": "benchmark_geofabric.nc"
+			"local_cache": "",
+			"subfolder": "results",
+			"catchment_boundary": "large.geojson",
+			"result_dem": "hydrological_dem.nc",
+			"result_geofabric": "hydrological_geofabric.nc"
 		},
 		"apis": {
 			"open_topography": {

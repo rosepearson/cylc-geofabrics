@@ -2,40 +2,87 @@
 """
 Run setup - download needed LiDAR files
 """
+
 import json
 import pathlib
+import dotenv
+import os
 import geoapis
 import geoapis.lidar
 import geopandas
 
+
 def main():
-    print('Run setup!')
-    print(pathlib.Path().cwd())
-    
-    # define paths
+    """ The setup.main function updates the paths in the instruction file based
+    on the run location, and downloads all LiDAR data required for the later
+    GeoFabrics processing steps. """
+
+    print("Run setup!")
+
+    ## Define paths
+    # note if calling python direct use: 'base_path = pathlib.Path().cwd()'
     base_path = pathlib.Path().cwd().parent.parent.parent
-    data_path = base_path / "data"
-    
-    # read in the instruction file
+    cache_path = base_path / "data"
+
+    ## Read in the instruction file
     with open(base_path / "instruction.json", "r") as file_pointer:
         instructions = json.load(file_pointer)
     crs = instructions["rivers"]["output"]["crs"]["horizontal"]
-    
-    # amend and save back out
-    
-    # load in catchment
-    catchment = geopandas.read_file(data_path / "small.geojson")
-    catchment.set_crs(crs, inplace=True, allow_override=True) # Note tempoarary while env setup correctly. CRS not being read in correctly
-    print(catchment.crs)
-    print(catchment.bounds)
-    print(instructions["dem"]["data_paths"]["catchment_boundary"])
-    
-    # load in LiDAR files
-    lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=data_path, 
-                                                 search_polygon=catchment, verbose=True)
+
+    ## Create results director
+    results_dir = cache_path / instructions["dem"]["data_paths"]["subfolder"]
+    results_dir.mkdir()
+
+    ## Amend paths (cache and river files) in instruction file
+    # cache_path
+    instructions["rivers"]["data_paths"]["local_cache"] = str(cache_path)
+    instructions["drains"]["data_paths"]["local_cache"] = str(cache_path)
+    instructions["dem"]["data_paths"]["local_cache"] = str(cache_path)
+    instructions["roughness"]["data_paths"]["local_cache"] = str(cache_path)
+    # catchment_boundary path
+    instructions["drains"]["data_paths"]["catchment_boundary"] = str(
+        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+    )
+    instructions["dem"]["data_paths"]["catchment_boundary"] = str(
+        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+    )
+    instructions["roughness"]["data_paths"]["catchment_boundary"] = str(
+        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+    )
+    # river flow, friction and network files
+    instructions["rivers"]["rivers"]["rec_file"] = str(
+        cache_path / instructions["rivers"]["rivers"]["rec_file"]
+    )
+    instructions["rivers"]["rivers"]["flow_file"] = str(
+        cache_path / instructions["rivers"]["rivers"]["flow_file"]
+    )
+
+    ## Load in the LINZ API key and add to the instruction file
+    # Load the LINZ API keys
+    dotenv.load_dotenv(base_path / ".env")
+    linz_key = os.environ.get("LINZ_API", None)
+    # Add the LINZ API key
+    instructions["rivers"]["apis"]["linz"]["key"] = linz_key
+    instructions["drains"]["apis"]["linz"]["key"] = linz_key
+    instructions["dem"]["apis"]["linz"]["key"] = linz_key
+    instructions["roughness"]["apis"]["linz"]["key"] = linz_key
+
+    ## Save the amended instructions in cylc run cache
+    with open(base_path / "instruction.json", "w") as file_pointer:
+        json.dump(instructions, file_pointer, indent=4)
+
+    ## Load in catchment
+    catchment = geopandas.read_file(instructions["dem"]["data_paths"]["catchment_boundary"])
+    # Explicitly override as CRS isn't being read in correctly.
+    catchment.set_crs(crs, inplace=True, allow_override=True)
+
+    ## Load in LiDAR files
+    print("Download LiDAR files")
+    lidar_fetcher = geoapis.lidar.OpenTopography(
+        cache_path=cache_path, search_polygon=catchment, verbose=True
+    )
     lidar_fetcher.run("Wellington_2013")
-    
-    
+    print("Finished setup!")
 
 
 if __name__ == "__main__":
