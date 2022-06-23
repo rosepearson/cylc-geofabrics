@@ -12,8 +12,9 @@ import geopandas
 
 def main():
     """ The setup.main function updates the paths in the instruction file based
-    on the run location,     and downloads all LiDAR data required for the
-    later GeoFabrics processing steps. """
+    on the run location, and downloads all LiDAR data required for the later
+    GeoFabrics processing steps. """
+
     print("Run setup!")
 
     # define paths
