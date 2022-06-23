@@ -3,4 +3,7 @@
 # This script is used to activate a preexisting conda environment
 # ------------------------------------------------------------------------------
 # Note: "conda" does not work with "set -u"
-conda activate --stack cylc-geofabrics
+
+set +u # allow unbound variables
+conda activate geofabrics # or whatever
+set -u # disallow them again, before carrying on

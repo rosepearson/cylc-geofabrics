@@ -7,10 +7,12 @@
         """
 [runtime]
     [[setup]]
-        script = """conda activate --stack geofabrics
+        script = """set +u # allow unbound variables
+                    conda activate geofabrics # or whatever
+                    set -u # disallow them again, before carrying on
                     python -c 'import setup; setup.main()'"""
     [[rivers]]
-        script = """conda activate --stack geofabrics
+        script = """script.sh
                     python -c 'import rivers; rivers.main()'"""
     [[drains]]
         script = """conda activate --stack geofabrics

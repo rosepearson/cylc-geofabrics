@@ -5,7 +5,7 @@ Run rivers
 import json
 import pathlib
 import dotenv
-import geofabrics
+#import geofabrics
 
 def main():
     """ The rivers.main function updates sets the LINZ API keys, reads the
@@ -19,16 +19,16 @@ def main():
 
     # Setup the LINZ API keys
     dotenv.load_dotenv(base_path / ".env")
-        linz_key = os.environ.get("LINZ_API", None)
+    linz_key = os.environ.get("LINZ_API", None)
 
     # Read in the instruction file
     with open(base_path / "instruction.json", "r") as file_pointer:
         instructions = json.load(file_pointer)
 
     # Launch the geofabrics processing routine
-    runner = processor.RiverBathymetryGenerator(
+    '''runner = processor.RiverBathymetryGenerator(
         cls.instructions["rivers"], debug=False
-    )
+    )'''
 
 
 if __name__ == "__main__":
