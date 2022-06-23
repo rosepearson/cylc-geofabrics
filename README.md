@@ -2,7 +2,7 @@
 A repository to get Cylc setup running GeoFabrics over a catchment.
 
 # Current status
-*__This is setup and ready to run for Waikanae. It is expected this will be run on a node with 2 or more CPU and at least 8GB.__*
+*__This is setup and ready to run for Waikanae. It is expected this will be run on a node with 2 or more CPU and at least 8GB. Results are written to cylc-run/waikanae/runN/data/results__*
 
 # NeSI setup
 This is designed to run on the NeSI HPC. Basic [NeSI help](https://support.nesi.org.nz/hc/en-gb)
