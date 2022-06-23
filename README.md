@@ -2,7 +2,7 @@
 A repository to get Cylc setup running GeoFabrics over a catchment.
 
 # Current status
-*__The conda environment is mainly setup for geoapis, but I still need to work through including geofabrics. The cylc workflow skeleton exists. The setup tasks is finished and mostly working (runs locally fine, need to invetigate an environment related error that stops it progressing to the next steps). The remaining tasks need to be written - but will largely be a copy of the setup task and existing geofabrics tests__*
+*__This is setup and ready to run for Waikanae. It is expected this will be run on a node with 2 or more CPU and at least 8GB.__*
 
 # NeSI setup
 This is designed to run on the NeSI HPC. Basic [NeSI help](https://support.nesi.org.nz/hc/en-gb)
