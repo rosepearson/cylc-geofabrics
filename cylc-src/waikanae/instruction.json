@@ -116,19 +116,19 @@
 			"number_of_cores": 2
 		},
 		"data_paths": {
-            "local_cache": "",
+			"local_cache": "",
 			"subfolder": "results",
-            "catchment_boundary": "small.geojson",
-            "raw_dem": "raw_dem.nc",
-            "river_polygons": ["river_polygon.geojson",
-							 "fan_polygon.geojson",
-							 "closed_drain_polygon_5m_width.geojson",
-							 "open_drain_polygon_5m_width.geojson"],
+			"catchment_boundary": "small.geojson",
+			"raw_dem": "raw_dem.nc",
+			"river_polygons": ["river_polygon.geojson",
+							   "fan_polygon.geojson",
+							   "closed_drain_polygon_5m_width.geojson",
+							   "open_drain_polygon_5m_width.geojson"],
 			"river_bathymetry": ["river_bathymetry.geojson",
 								 "fan_bathymetry.geojson",
 								 "closed_drain_elevation_5m_width.geojson",
 								 "open_drain_elevation_5m_width.geojson"],
-            "result_dem": "hydrological_dem.nc"
+			"result_dem": "hydrological_dem.nc"
 		},
 		"apis": {
 			"open_topography": {
@@ -174,11 +174,11 @@
 			"number_of_cores": 2
 		},
 		"data_paths": {
-            "local_cache": "",
-            "subfolder": "results",
-            "catchment_boundary": "small.geojson",
-            "result_dem": "hydrological_dem.nc",
-            "result_geofabric": "hydrological_geofabric.nc"
+			"local_cache": "",
+			"subfolder": "results",
+			"catchment_boundary": "small.geojson",
+			"result_dem": "hydrological_dem.nc",
+			"result_geofabric": "hydrological_geofabric.nc"
 		},
 		"apis": {
 			"open_topography": {
