@@ -6,6 +6,7 @@ channels:
   - defaults
 dependencies:
   - pip
+  - python-dotenv
   - geopandas>=0.10.2 # Needs to be explicit otherwise the dependencies required to use sjoin are not installed
   - pip:
     - geoapis>=0.2.8

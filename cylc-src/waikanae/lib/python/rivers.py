@@ -5,6 +5,7 @@ Run rivers
 import json
 import pathlib
 import dotenv
+import os
 #import geofabrics
 
 def main():
