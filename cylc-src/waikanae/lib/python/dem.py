@@ -7,7 +7,7 @@ import json
 import pathlib
 import dotenv
 import os
-#import geofabrics.processor
+import geofabrics.processor
 
 def main():
     """ The dem.main function updates sets the LINZ API keys, reads the
@@ -30,9 +30,10 @@ def main():
         instructions = json.load(file_pointer)
 
     # Launch the geofabrics processing routine
-    '''runner = geofabrics.processor.HydrologicDemGenerator(
-        cls.instructions["dem"], debug=False
-    )'''
+    runner = geofabrics.processor.HydrologicDemGenerator(
+        instructions["dem"]
+    )
+    runner.run()
 
 
 if __name__ == "__main__":

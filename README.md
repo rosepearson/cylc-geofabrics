@@ -56,10 +56,11 @@ cd /nesi/project/niwa03440/Cylc-GeoFabrics/cylc-src/waikanae
 # Create a cylc graph from the cylc.flow file
 cylc graph . -o graph.png
 
-# Install and run the cylc file
+# Install, run and monitor the cylc workflow
 cylc validate . # Check for errors and correct as needed
 cylc install
 cylc play waikanae
+cylc tui waikanae
 
 # View outputs while `cylc cat-log -f o waikanae//runN/setup` is fixed
 cylc cat-log -f e waikanae//1/setup # Error output

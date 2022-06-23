@@ -17,39 +17,57 @@ def main():
 
     print("Run setup!")
 
-    # define paths
-    # Note if calling python direct use: 'base_path = pathlib.Path().cwd()'
+    ## Define paths
+    # note if calling python direct use: 'base_path = pathlib.Path().cwd()'
     base_path = pathlib.Path().cwd().parent.parent.parent
-    data_path = base_path / "data"
+    cache_path = base_path / "data"
 
-    # read in the instruction file
+    ## Read in the instruction file
     with open(base_path / "instruction.json", "r") as file_pointer:
         instructions = json.load(file_pointer)
     crs = instructions["rivers"]["output"]["crs"]["horizontal"]
 
-    # amend paths (cache and river files) in instruction file
-    instructions["rivers"]["data_paths"]["cache_path"] = str(data_path)
+    ## Create results director
+    results_dir = cache_path / instructions["dem"]["data_paths"]["subfolder"]
+    results_dir.mkdir()
+
+    ## Amend paths (cache and river files) in instruction file
+    # cache_path
+    instructions["rivers"]["data_paths"]["local_cache"] = str(cache_path)
+    instructions["drains"]["data_paths"]["local_cache"] = str(cache_path)
+    instructions["dem"]["data_paths"]["local_cache"] = str(cache_path)
+    instructions["roughness"]["data_paths"]["local_cache"] = str(cache_path)
+    # catchment_boundary path
+    instructions["drains"]["data_paths"]["catchment_boundary"] = str(
+        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+    )
+    instructions["dem"]["data_paths"]["catchment_boundary"] = str(
+        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+    )
+    instructions["roughness"]["data_paths"]["catchment_boundary"] = str(
+        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+    )
+    # river flow, friction and network files
     instructions["rivers"]["rivers"]["rec_file"] = str(
-        data_path / instructions["rivers"]["rivers"]["rec_file"]
+        cache_path / instructions["rivers"]["rivers"]["rec_file"]
     )
     instructions["rivers"]["rivers"]["flow_file"] = str(
-        data_path / instructions["rivers"]["rivers"]["flow_file"]
+        cache_path / instructions["rivers"]["rivers"]["flow_file"]
     )
-    instructions["drains"]["data_paths"]["cache_path"] = str(data_path)
-    instructions["dem"]["data_paths"]["cache_path"] = str(data_path)
-    instructions["roughness"]["data_paths"]["cache_path"] = str(data_path)
-    # Save the amended instructions in cylc run cache
+
+    ## Save the amended instructions in cylc run cache
     with open(base_path / "instruction.json", "w") as file_pointer:
         json.dump(instructions, file_pointer, indent=4)
-    # load in catchment
-    catchment = geopandas.read_file(data_path / "small.geojson")
+
+    ## Load in catchment
+    catchment = geopandas.read_file(instructions["dem"]["data_paths"]["catchment_boundary"])
     # Explicitly override as CRS isn't being read in correctly.
     catchment.set_crs(crs, inplace=True, allow_override=True)
 
-    # load in LiDAR files
+    ## Load in LiDAR files
     print("Download LiDAR files")
     lidar_fetcher = geoapis.lidar.OpenTopography(
-        cache_path=data_path, search_polygon=catchment, verbose=True
+        cache_path=cache_path, search_polygon=catchment, verbose=True
     )
     lidar_fetcher.run("Wellington_2013")
     print("Finished setup!")

@@ -8,7 +8,9 @@ dependencies:
   - pip
   - python-dotenv
   - geopandas>=0.10.2 # Needs to be explicit otherwise the dependencies required to use sjoin are not installed
+  - rasterio # Needs to be explicit as wheel fails to build if insalled as a dependency of geofabrics
   - pip:
     - geoapis>=0.2.8
+    - geofabrics==0.9.3a0
 
 prefix: 

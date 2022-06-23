@@ -7,7 +7,7 @@ import json
 import pathlib
 import dotenv
 import os
-#import geofabrics.processor
+import geofabrics.processor
 
 def main():
     """ The drains.main function updates sets the LINZ API keys, reads the
@@ -30,9 +30,10 @@ def main():
         instructions = json.load(file_pointer)
 
     # Launch the geofabrics processing routine
-    '''runner = geofabrics.processor.DrainBathymetryGenerator(
-        cls.instructions["drains"], debug=False
-    )'''
+    runner = geofabrics.processor.DrainBathymetryGenerator(
+        instructions["drains"], debug=False
+    )
+    runner.run()
 
 
 if __name__ == "__main__":
