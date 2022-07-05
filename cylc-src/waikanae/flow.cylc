@@ -1,3 +1,6 @@
+# Runs through the GeoFabrics workflow for a single catchment.
+# Notes - call "cylc config" to see avaliable platforms
+
 [scheduling]
     [[graph]]
         R1 = """
@@ -19,13 +22,17 @@
                     # Run Python script
                     python -c 'import rivers; rivers.main()'"""
         
+        execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
+        execution time limit = PT10M # A maximum expected execution time
+        
         platform = maui-cs-slurm  # Run "cylc config" to see platforms
-
+        
         [[[directives]]]
             --account = niwa03440
-            --mem = 8G
+            --mem-per-cpu = 8G
             --ntasks = 4
             --job-name = rivers
+            
     [[drains]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -33,13 +40,18 @@
                     set -u
                     # Run Python script
                     python -c 'import drains; drains.main()'"""
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+        
+        execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
+        execution time limit = PT10M # A maximum expected execution time
+        
+        platform = maui-cs-slurm
 
         [[[directives]]]
             --account = niwa03440
-            --mem = 8G
+            --mem-per-cpu = 8G
             --ntasks = 4
             --job-name = drains
+            
     [[lidar]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -47,13 +59,17 @@
                     set -u
                     # Run Python script
                     python -c 'import lidar; lidar.main()'"""
+        
+        execution time limit = PT10M # A maximum expected execution time
+        
         platform = maui-cs-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
             --account = niwa03440
-            --mem = 8G
+            --mem-per-cpu = 8G
             --ntasks = 8
             --job-name = lidar
+            
     [[dem]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -61,13 +77,17 @@
                     set -u
                     # Run Python script
                     python -c 'import dem; dem.main()'"""
+        
+        execution time limit = PT10M # A maximum expected execution time
+        
         platform = maui-cs-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
             --account = niwa03440
-            --mem = 8G
+            --mem-per-cpu = 8G
             --ntasks = 1
             --job-name = dem
+            
     [[roughness]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -75,10 +95,13 @@
                     set -u
                     # Run Python script
                     python -c 'import roughness; roughness.main()'"""
+        
+        execution time limit = PT10M # A maximum expected execution time
+        
         platform = maui-cs-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
             --account = niwa03440
-            --mem = 8G
+            --mem-per-cpu = 8G
             --ntasks = 8
             --job-name = roughness
