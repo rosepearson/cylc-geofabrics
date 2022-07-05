@@ -10,7 +10,7 @@
     [[setup]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
-                    conda activate geofabrics
+                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
                     # Run Python script
                     python -c 'import setup; setup.main()'"""
@@ -20,7 +20,7 @@
     [[rivers]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
-                    conda activate geofabrics
+                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
                     # Run Python script
                     python -c 'import rivers; rivers.main()'"""
@@ -39,7 +39,7 @@
     [[drains]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
-                    conda activate geofabrics
+                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
                     # Run Python script
                     python -c 'import drains; drains.main()'"""
@@ -58,7 +58,7 @@
     [[lidar]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
-                    conda activate geofabrics
+                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
                     # Run Python script
                     python -c 'import lidar; lidar.main()'"""
@@ -76,7 +76,7 @@
     [[dem]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
-                    conda activate geofabrics
+                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
                     # Run Python script
                     python -c 'import dem; dem.main()'"""
@@ -94,7 +94,7 @@
     [[roughness]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
-                    conda activate geofabrics
+                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
                     # Run Python script
                     python -c 'import roughness; roughness.main()'"""
