@@ -29,6 +29,7 @@ The following instructions are for getting Cylc 8 setup for a fresh session. Ope
 ```
 # Setup paths to access Cylc
 module purge
+module load NeSI
 module load Anaconda3
 export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
 export CYLC_VERSION=8.0rc3

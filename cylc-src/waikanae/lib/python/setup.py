@@ -34,7 +34,7 @@ def main():
     ## Create results director
     subfolder = instructions["dem"]["data_paths"]["subfolder"]
     cylc_run_results_dir = cylc_run_cache_path / subfolder
-    cylc_run_results_dir.mkdir()
+    cylc_run_results_dir.mkdir(parents=False, exist_ok=False)
 
     ## Amend paths (cache and river files) in instruction file
     # cache_path
@@ -54,11 +54,11 @@ def main():
         cylc_run_cache_path / catchment_boundary
     )
     # final geofabric output to overal cylc cache location
-    output_geofabric_path = cache_path / instructions["dem"]["data_paths"]["result_geofabric"]
+    output_geofabric_path = cache_path / instructions["roughness"]["data_paths"]["result_geofabric"]
     instructions["roughness"]["data_paths"]["result_geofabric"] = str(
         output_geofabric_path
     )
-    output_geofabric_path.parents[0].mkdir(parents=True, exist_ok=False)
+    output_geofabric_path.parents[0].mkdir(parents=True, exist_ok=True)
     
     # river flow, friction and network files
     instructions["rivers"]["rivers"]["rec_file"] = str(
