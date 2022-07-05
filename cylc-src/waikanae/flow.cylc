@@ -6,10 +6,6 @@
             setup => rivers & drains & lidar => dem => roughness
         """
 [runtime]
-    [[root]]
-          platform = maui-cs-slurm  # Run "cylc config" to see platforms
-          [[[directives]]]
-             --account = niwa03440
     [[setup]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -24,6 +20,14 @@
                     set -u
                     # Run Python script
                     python -c 'import rivers; rivers.main()'"""
+        
+        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+
+        [[[directives]]]
+            --account = niwa03440
+            --mem = 8G
+            --ntasks = 2
+            --job-name = rivers
     [[drains]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -31,6 +35,13 @@
                     set -u
                     # Run Python script
                     python -c 'import drains; drains.main()'"""
+        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+
+        [[[directives]]]
+            --account = niwa03440
+            --mem = 8G
+            --ntasks = 2
+            --job-name = drains
     [[lidar]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -38,6 +49,13 @@
                     set -u
                     # Run Python script
                     python -c 'import lidar; lidar.main()'"""
+        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+
+        [[[directives]]]
+            --account = niwa03440
+            --mem = 8G
+            --ntasks = 2
+            --job-name = lidar
     [[dem]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -45,6 +63,13 @@
                     set -u
                     # Run Python script
                     python -c 'import dem; dem.main()'"""
+        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+
+        [[[directives]]]
+            --account = niwa03440
+            --mem = 8G
+            --ntasks = 2
+            --job-name = dem
     [[roughness]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
@@ -52,3 +77,10 @@
                     set -u
                     # Run Python script
                     python -c 'import roughness; roughness.main()'"""
+        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+
+        [[[directives]]]
+            --account = niwa03440
+            --mem = 8G
+            --ntasks = 2
+            --job-name = roughness
