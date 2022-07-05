@@ -179,7 +179,7 @@
 			"subfolder": "results",
 			"catchment_boundary": "large.geojson",
 			"result_dem": "hydrological_dem.nc",
-			"result_geofabric": "hydrological_geofabric.nc"
+			"result_geofabric": "029/geofabrics/hydrological_geofabric.nc"
 		},
 		"apis": {
 			"open_topography": {

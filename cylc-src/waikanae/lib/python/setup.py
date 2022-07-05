@@ -21,45 +21,56 @@ def main():
 
     ## Define paths
     # note if calling python direct use: 'base_path = pathlib.Path().cwd()'
-    base_path = pathlib.Path().cwd().parent.parent.parent
-    cache_path = base_path / "data"
+    cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
+    cylc_run_cache_path = cylc_run_base_path / "data"
+    cache_path = pathlib.Path("/nesi/project/niwa03440/cylc_test/")
+    rec_data_path = cache_path / "data/REC2/"
 
     ## Read in the instruction file
-    with open(base_path / "instruction.json", "r") as file_pointer:
+    with open(cylc_run_base_path / "instruction.json", "r") as file_pointer:
         instructions = json.load(file_pointer)
     crs = instructions["rivers"]["output"]["crs"]["horizontal"]
 
     ## Create results director
-    results_dir = cache_path / instructions["dem"]["data_paths"]["subfolder"]
-    results_dir.mkdir()
+    subfolder = instructions["dem"]["data_paths"]["subfolder"]
+    cylc_run_results_dir = cylc_run_cache_path / subfolder
+    cylc_run_results_dir.mkdir()
 
     ## Amend paths (cache and river files) in instruction file
     # cache_path
-    instructions["rivers"]["data_paths"]["local_cache"] = str(cache_path)
-    instructions["drains"]["data_paths"]["local_cache"] = str(cache_path)
-    instructions["dem"]["data_paths"]["local_cache"] = str(cache_path)
-    instructions["roughness"]["data_paths"]["local_cache"] = str(cache_path)
+    instructions["rivers"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
+    instructions["drains"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
+    instructions["dem"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
+    instructions["roughness"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
     # catchment_boundary path
+    catchment_boundary = instructions["dem"]["data_paths"]["catchment_boundary"]
     instructions["drains"]["data_paths"]["catchment_boundary"] = str(
-        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+        cylc_run_cache_path / catchment_boundary
     )
     instructions["dem"]["data_paths"]["catchment_boundary"] = str(
-        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+        cylc_run_cache_path / catchment_boundary
     )
     instructions["roughness"]["data_paths"]["catchment_boundary"] = str(
-        cache_path / instructions["dem"]["data_paths"]["catchment_boundary"]
+        cylc_run_cache_path / catchment_boundary
     )
+    # final geofabric output to overal cylc cache location
+    output_geofabric_path = cache_path / instructions["dem"]["data_paths"]["result_geofabric"]
+    instructions["roughness"]["data_paths"]["result_geofabric"] = str(
+        output_geofabric_path
+    )
+    output_geofabric_path.parents[0].mkdir(parents=True, exist_ok=False)
+    
     # river flow, friction and network files
     instructions["rivers"]["rivers"]["rec_file"] = str(
-        cache_path / instructions["rivers"]["rivers"]["rec_file"]
+        rec_data_path / instructions["rivers"]["rivers"]["rec_file"]
     )
     instructions["rivers"]["rivers"]["flow_file"] = str(
-        cache_path / instructions["rivers"]["rivers"]["flow_file"]
+        rec_data_path / instructions["rivers"]["rivers"]["flow_file"]
     )
 
     ## Load in the LINZ API key and add to the instruction file
     # Load the LINZ API keys
-    dotenv.load_dotenv(base_path / ".env")
+    dotenv.load_dotenv(cylc_run_base_path / ".env")
     linz_key = os.environ.get("LINZ_API", None)
     # Add the LINZ API key
     instructions["rivers"]["apis"]["linz"]["key"] = linz_key
@@ -68,7 +79,7 @@ def main():
     instructions["roughness"]["apis"]["linz"]["key"] = linz_key
 
     ## Save the amended instructions in cylc run cache
-    with open(base_path / "instruction.json", "w") as file_pointer:
+    with open(cylc_run_base_path / "instruction.json", "w") as file_pointer:
         json.dump(instructions, file_pointer, indent=4)
 
     ## Load in catchment
@@ -79,7 +90,7 @@ def main():
     ## Load in LiDAR files
     print("Download LiDAR files")
     lidar_fetcher = geoapis.lidar.OpenTopography(
-        cache_path=cache_path, search_polygon=catchment, verbose=True
+        cache_path=cylc_run_cache_path, search_polygon=catchment, verbose=True
     )
     lidar_fetcher.run("Wellington_2013")
     print("Finished setup!")
