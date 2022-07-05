@@ -12,7 +12,7 @@
 		},
 		"processing": {
 			"chunk_size": 1000,
-			"number_of_cores": 2
+			"number_of_cores": 4
 		},
 		"data_paths": {
 			"local_cache": "",
@@ -72,7 +72,7 @@
 		},
 		"processing": {
 			"chunk_size": 1000,
-			"number_of_cores": 2
+			"number_of_cores": 4
 		},
 		"data_paths": {
 			"local_cache": "",
@@ -114,7 +114,7 @@
 		},
 		"processing": {
 			"chunk_size": 100,
-			"number_of_cores": 2
+			"number_of_cores": 8
 		},
 		"data_paths": {
 			"local_cache": "",
@@ -172,7 +172,7 @@
 		},
 		"processing": {
 			"chunk_size": 100,
-			"number_of_cores": 2
+			"number_of_cores": 8
 		},
 		"data_paths": {
 			"local_cache": "",
