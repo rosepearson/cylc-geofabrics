@@ -6,6 +6,10 @@
             setup => rivers & drains & lidar => dem => roughness
         """
 [runtime]
+    [[root]]
+          platform = maui-cs-slurm  # Run "cylc config" to see platforms
+          [[[directives]]]
+             --account = niwa03440
     [[setup]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
