@@ -28,7 +28,7 @@
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
         
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+        platform = mahuika-slurm  # Run "cylc config" to see platforms
         
         [[[directives]]]
             --account = niwa03440
@@ -47,7 +47,7 @@
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
         
-        platform = maui-cs-slurm
+        platform = mahuika-slurm
 
         [[[directives]]]
             --account = niwa03440
@@ -65,7 +65,7 @@
         
         execution time limit = PT4H # A maximum expected execution time
         
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+        platform = mahuika-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
             --account = niwa03440
@@ -83,7 +83,7 @@
         
         execution time limit = PT1H # A maximum expected execution time
         
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+        platform = mahuika-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
             --account = niwa03440
@@ -101,7 +101,7 @@
         
         execution time limit = PT4H # A maximum expected execution time
         
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
+        platform = mahuika-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
             --account = niwa03440
