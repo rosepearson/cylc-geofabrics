@@ -10,6 +10,8 @@
     [[setup]]
         script = """# See bin/nesi-conda-install for details on what the following lines do
                     set +u
+                    module load Anaconda3
+                    source $(conda info --base)/etc/profile.d/conda.sh
                     conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
                     # Run Python script
