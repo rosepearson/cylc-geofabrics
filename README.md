@@ -16,7 +16,7 @@ The following instructions are for getting Cylc 8 setup for a fresh session. Ope
 # Setup paths to access Cylc
 module purge
 module load NeSI
-module load Anaconda3
+module load Miniconda3
 export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
 export CYLC_VERSION=8.0rc3
 export PROJECT=niwa03440
@@ -125,3 +125,31 @@ The LINZ Data Service (LDS) requires an API key. This is stored in a `.env` file
 * [ ] Update the setup.py to create a full instructions.json from a minimal list of parameters
 * [ ] Introduce environment variables / arguments to parameterise the flow.cylc and python scripts (i.e. to set the location to write out to, and the catchment to process)
 * [ ] Restructure the suite to allow it to be applied to any catchment
+
+# Running GeoFabrics directly on the HPC
+The following section gives instructions for running GeoFabrics directly on the HPC. 
+
+## Instructions for a generic new HPC
+1. The recommended file structures is:
+ - geofabrics
+   |- GeoFabrics (the repo - https://github.com/rosepearson/GeoFabrics)
+   |- caches (folder the caches will end up in)
+   |- catchments (folder containing the geometry files (i.e geojson) specifying the spatial region where GeoFabrics will be run over)
+   |- instructions (folder containing the instruction files used to run GeoFabrics)
+2. Get a local copy of the GeoFabrics repo
+3. Create or copy catchment and instruction files to get started
+   * See https://github.com/rosepearson/GeoFabrics/tree/main/tests for example instruction files
+   * See [/nesi/project/niwa03440/geofabrics] for an example with full-size instruction files and catchments
+4. See _4. Run an instruction_ in the following section for an example of how to run GeoFabrics
+
+## Instructions specific to NeSI & niwa03440
+1. Navigate to [/nesi/project/niwa03440/geofabrics]
+2. Check [/nesi/project/niwa03440/geofabrics/GeoFabrics] is in teh branch you are trying to test
+4. Run an instruction
+    i. Directly in Python
+        * `cd /nesi/project/niwa03440/geofabrics/GeoFabrics/src`
+        * Directly in Python: `python -m main --instruction /nesi/project/niwa03440/geofabrics/instructions/instruction_dem_only.json`
+    ii. Using Slurm
+        * `cd /nesi/project/niwa03440/geofabrics`
+        * `sbatch westport.sl`
+
