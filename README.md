@@ -135,7 +135,7 @@ The following section gives instructions for running GeoFabrics directly on the 
  - geofabrics
    |- GeoFabrics (the repo - https://github.com/rosepearson/GeoFabrics)
    |- caches (folder the caches will end up in)
-   |- catchments (folder containing the geometry files (i.e geojson) specifying the spatial region where GeoFabrics will be run over)
+   |- catchments (folder containing the geometry files (i.e geojson) refenced in the instruction files)
    |- instructions (folder containing the instruction files used to run GeoFabrics)
 ```
 2. Get a local copy of the GeoFabrics repo
