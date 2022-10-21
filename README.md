@@ -148,10 +148,10 @@ The following section gives instructions for running GeoFabrics directly on the 
 1. Navigate to [/nesi/project/niwa03440/geofabrics](/nesi/project/niwa03440/geofabrics)
 2. Check [/nesi/project/niwa03440/geofabrics/GeoFabrics](/nesi/project/niwa03440/geofabrics) is on the branch you are trying to test
 4. Run an instruction
-    i. Directly in Python
+    1. Directly in Python
         - `cd /nesi/project/niwa03440/geofabrics/GeoFabrics/src`
         - Directly in Python: `python -m main --instruction /nesi/project/niwa03440/geofabrics/instructions/instruction_dem_only.json`
-    ii. Using Slurm
+    2. Using Slurm
         - `cd /nesi/project/niwa03440/geofabrics`
         - `sbatch westport.sl`
 
