@@ -138,15 +138,15 @@ The following section gives instructions for running GeoFabrics directly on the 
    |- catchments (folder containing the geometry files (i.e geojson) refenced in the instruction files)
    |- instructions (folder containing the instruction files used to run GeoFabrics)
 ```
-2. Get a local copy of the GeoFabrics repo
+2. Get a local copy of the GeoFabrics [repo](https://github.com/rosepearson/GeoFabrics)
 3. Create or copy catchment and instruction files to get started
    * See https://github.com/rosepearson/GeoFabrics/tree/main/tests for example instruction files
-   * See [/nesi/project/niwa03440/geofabrics] for an example with full-size instruction files and catchments
+   * See [/nesi/project/niwa03440/geofabrics](/nesi/project/niwa03440/geofabrics) for an example with full-size instruction files and catchments
 4. See _4. Run an instruction_ in the following section for an example of how to run GeoFabrics
 
 ## Instructions specific to NeSI & niwa03440
-1. Navigate to [/nesi/project/niwa03440/geofabrics]
-2. Check [/nesi/project/niwa03440/geofabrics/GeoFabrics] is in teh branch you are trying to test
+1. Navigate to [/nesi/project/niwa03440/geofabrics](/nesi/project/niwa03440/geofabrics)
+2. Check [/nesi/project/niwa03440/geofabrics/GeoFabrics](/nesi/project/niwa03440/geofabrics) is on the branch you are trying to test
 4. Run an instruction
     i. Directly in Python
         * `cd /nesi/project/niwa03440/geofabrics/GeoFabrics/src`
