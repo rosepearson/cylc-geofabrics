@@ -13,5 +13,6 @@ dependencies:
   - pip:
     - geoapis>=0.2.8
     - geofabrics>=0.9.3
+    - dask[complete]
 
 prefix: /nesi/project/niwa03440/conda/envs/geofabrics
