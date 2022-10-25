@@ -103,7 +103,7 @@ You may also need to explicitly add a mahuika platform if it does not show up as
 This platform can then be specified in any of the cylc runtime tasks.
 
 ## Conda environment setup 
-Currently the flow relies on an a conda environment being created before running cylc. In future this may be done as part of the setup stage. See this [link](https://gist.github.com/matthewrmshin/74a7b78adecd297b40e64f6c867b316b) for an example.
+Currently the flow relies on a conda environment being created before running cylc. In future this may be done as part of the setup stage. See this [link](https://gist.github.com/matthewrmshin/74a7b78adecd297b40e64f6c867b316b) for an example.
 
 Execute the following in the bash terminal. Check there are no errors. Note that the environment is created in a shared location so it may be accessed by others working on the niwa03440 project.
 
