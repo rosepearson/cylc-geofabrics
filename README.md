@@ -130,7 +130,7 @@ The LINZ Data Service (LDS) requires an API key. This is stored in a `.env` file
 The following section gives instructions for running GeoFabrics directly on the HPC. 
 
 ## Instructions for a generic new HPC
-1. The recommended file structures is:
+1. The recommended folder structures is:
 ```
  - geofabrics
    |- GeoFabrics (the repo - https://github.com/rosepearson/GeoFabrics)
@@ -139,10 +139,12 @@ The following section gives instructions for running GeoFabrics directly on the 
    |- instructions (folder containing the instruction files used to run GeoFabrics)
 ```
 2. Get a local copy of the GeoFabrics [repo](https://github.com/rosepearson/GeoFabrics)
-3. Create or copy catchment and instruction files to get started
+    * Make sure you are on the branch you want to test
+3. Create an open a conda environment with the required dependencies. See [conda setup](https://github.com/rosepearson/cylc-geofabrics#conda-environment-setup)
+4. Create or copy catchment and instruction files to get started
    * See https://github.com/rosepearson/GeoFabrics/tree/main/tests for example instruction files
    * See [/nesi/project/niwa03440/geofabrics](/nesi/project/niwa03440/geofabrics) for an example with full-size instruction files and catchments
-4. See _4. Run an instruction_ in the following section for an example of how to run GeoFabrics
+5. See _4. Run an instruction_ in the following section for an example of how to run GeoFabrics
 
 ## Instructions specific to NeSI & niwa03440
 1. Navigate to [/nesi/project/niwa03440/geofabrics](/nesi/project/niwa03440/geofabrics)
