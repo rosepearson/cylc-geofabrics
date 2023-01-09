@@ -7,121 +7,81 @@
             setup => rivers & drains & lidar => dem => roughness
         """
 [runtime]
-    [[setup]]
-        script = """# See bin/nesi-conda-install for details on what the following lines do
+    [[root]]
+        pre-script = """
+                    # See bin/nesi-conda-install for details on what the following lines do
                     set +u
-                    module load Anaconda3
+                    module load Miniconda3
                     source $(conda info --base)/etc/profile.d/conda.sh
                     conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
-                    # Run Python script
-                    python -c 'import setup; setup.main()'"""
+        """
+
+        platform = maui-cs-slurm  # Run "cylc config" to see platforms - used mahuika-slurm previously
+ 
+        [[[directives]]]
+            --account = niwa03440
+            --partition = nesi_prepost
+
+    [[setup]]
+        # Run Python script
+        script = python -c 'import setup; setup.main()'
 
         execution time limit = PT30M # A maximum expected execution time
 
     [[rivers]]
-        script = """# See bin/nesi-conda-install for details on what the following lines do
-                    set +u
-                    module load Anaconda3
-                    source $(conda info --base)/etc/profile.d/conda.sh
-                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
-                    set -u
-                    # Run Python script
-                    python -c 'import rivers; rivers.main()'"""
+        # Run Python script
+        script = python -c 'import rivers; rivers.main()'
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
         
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms - used mahuika-slurm previously
-        
         [[[directives]]]
-            --account = niwa03440
             --mem-per-cpu = 8G
             --ntasks = 4
             --job-name = rivers
-            --partition = nesi_prepost
             
     [[drains]]
-        script = """# See bin/nesi-conda-install for details on what the following lines do
-                    set +u
-                    module load Anaconda3
-                    source $(conda info --base)/etc/profile.d/conda.sh
-                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
-                    set -u
-                    # Run Python script
-                    python -c 'import drains; drains.main()'"""
+        # Run Python script
+        script = python -c 'import drains; drains.main()'
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
-        
-        platform = maui-cs-slurm
 
         [[[directives]]]
-            --account = niwa03440
             --mem-per-cpu = 8G
             --ntasks = 4
             --job-name = drains
-            --partition = nesi_prepost
             
     [[lidar]]
-        script = """# See bin/nesi-conda-install for details on what the following lines do
-                    set +u
-                    module load Anaconda3
-                    source $(conda info --base)/etc/profile.d/conda.sh
-                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
-                    set -u
-                    # Run Python script
-                    python -c 'import lidar; lidar.main()'"""
+        # Run Python script
+        script = python -c 'import lidar; lidar.main()'
         
         execution time limit = PT4H # A maximum expected execution time
-        
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
-            --account = niwa03440
             --mem-per-cpu = 8G
             --ntasks = 8
             --job-name = lidar
-            --partition = nesi_prepost
             
     [[dem]]
-        script = """# See bin/nesi-conda-install for details on what the following lines do
-                    set +u
-                    module load Anaconda3
-                    source $(conda info --base)/etc/profile.d/conda.sh
-                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
-                    set -u
-                    # Run Python script
-                    python -c 'import dem; dem.main()'"""
+        # Run Python script
+        script = python -c 'import dem; dem.main()'
         
         execution time limit = PT1H # A maximum expected execution time
-        
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
-            --account = niwa03440
             --mem-per-cpu = 8G
             --ntasks = 1
             --job-name = dem
-            --partition = nesi_prepost
             
     [[roughness]]
-        script = """# See bin/nesi-conda-install for details on what the following lines do
-                    set +u
-                    module load Anaconda3
-                    source $(conda info --base)/etc/profile.d/conda.sh
-                    conda activate /nesi/project/niwa03440/conda/envs/geofabrics
-                    set -u
-                    # Run Python script
-                    python -c 'import roughness; roughness.main()'"""
+        # Run Python script
+        script = python -c 'import roughness; roughness.main()'
         
         execution time limit = PT4H # A maximum expected execution time
-        
-        platform = maui-cs-slurm  # Run "cylc config" to see platforms
 
         [[[directives]]]
-            --account = niwa03440
             --mem-per-cpu = 8G
             --ntasks = 8
             --job-name = roughness
-            --partition = nesi_prepost
