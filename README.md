@@ -108,13 +108,25 @@ Currently the flow relies on a conda environment being created before running cy
 Execute the following in the bash terminal. Check there are no errors. Note that the environment is created in a shared location so it may be accessed by others working on the niwa03440 project.
 
 ```
-# Setup conda environment
+set +u
+module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
+conda config --add pkgs_dirs /nesi/nobackup/niwa03440/$USER/conda_pkgs
 cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
-conda env create -f environment.yml -p /nesi/project/niwa03440/conda/envs/geofabrics
-
+conda env create -f geofabrics.yml -p /nesi/project/niwa03440/conda/envs/geofabrics
+conda activate /nesi/project/niwa03440/conda/envs/geofabrics
+set -u
 ```
 
-A note on removing environments if they need to be recreated: `conda remove --name geofabrics --all`
+### Clean up Environments
+A note on removing environments if they need to be recreated: 
+
+```
+set +u
+module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
+conda remove --all -p /nesi/project/niwa03440/conda/envs/geofabrics
+```
 
 ## LINZ API key
 The LINZ Data Service (LDS) requires an API key. This is stored in a `.env` file in `cylc-geofabrics/cylc-src/waikanae/.env` on NeSI, but it is not versioned as that would be a security risk. Refer to [this page](https://github.com/rosepearson/GeoFabrics/wiki/Testing-and-GitHub-Actions) if you need to generate a new `.env` file.
