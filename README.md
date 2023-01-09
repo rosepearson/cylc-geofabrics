@@ -18,7 +18,7 @@ module purge
 module load NeSI
 module load Miniconda3
 export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
-export CYLC_VERSION=8.0rc3
+export CYLC_VERSION=8.0.3
 export PROJECT=niwa03440
 ```
 
@@ -118,6 +118,9 @@ A note on removing environments if they need to be recreated: `conda remove --na
 
 ## LINZ API key
 The LINZ Data Service (LDS) requires an API key. This is stored in a `.env` file in `cylc-geofabrics/cylc-src/waikanae/.env` on NeSI, but it is not versioned as that would be a security risk. Refer to [this page](https://github.com/rosepearson/GeoFabrics/wiki/Testing-and-GitHub-Actions) if you need to generate a new `.env` file.
+
+# Trouble shooting
+If the workflow is failing at the scheduler stage (i.e. doesn't run any of the tasks) it may be because the Python environment has been polluted (i.e. you acidentially installed into Conda base). Check for `~/.local/lib` and delete unless you are sure you need the amendments.
 
 
 # Todo
