@@ -35,10 +35,7 @@ The following is a shell example for running the cylc workflow for creating a ge
 cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src/waikanae
 
 # Install, run and monitor the cylc workflow
-cylc validate . # Check for errors and correct as needed
-cylc install
-cylc play waikanae
-cylc tui waikanae
+cylc validate . && cylc install && cylc play waikanae && cylc tui waikanae
 
 # View outputs while `cylc cat-log -f o waikanae//runN/setup` is fixed
 cylc cat-log -f e waikanae//1/setup # Error output
@@ -85,7 +82,7 @@ Note you will need all folders only to have read access and you will need to set
 Once you have configued your SSH key, make sure to check you have access to the w-cylc01, w-cylc02, and w-cylc03 nodes. If you don't have access request permission as described in [Cylc 8 on Maui - One NIWA](https://one.niwa.co.nz/pages/viewpage.action?spaceKey=HPCF&title=Cylc+8+on+Maui).
 
 ## Cylc global.cylc setup
-If you are running Cylc on an interative session on Mahuika accessed via the JupyterHub portal, you will need to explicitly ensure the w-cylc01 .. 03 nodes are avaliable. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/8.0rc3/global.cylc`. 
+If you are running Cylc on an interative session on Mahuika accessed via the JupyterHub portal, you will need to explicitly ensure the w-cylc01 .. 03 nodes are avaliable. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/global.cylc`. 
 
 ```
 	[scheduler]
@@ -93,7 +90,7 @@ If you are running Cylc on an interative session on Mahuika accessed via the Jup
 	        available = w-cylc01, w-cylc02, w-cylc03
 ```
 
-You may also need to explicitly add a mahuika platform if it does not show up as one of the listed platforms when you run `cylc config`. This is particularly nessecary if you NIWA/NeSI project only has permission to run on Mahuika and not Maui. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/8.0rc3/global.cylc`. 
+You may also need to explicitly add a mahuika platform if it does not show up as one of the listed platforms when you run `cylc config`. This is particularly nessecary if you NIWA/NeSI project only has permission to run on Mahuika and not Maui. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/8.0.3/global.cylc`. 
 
 ```
 [platforms]
