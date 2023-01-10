@@ -7,7 +7,7 @@ Table of contents:
 * Initial Cylc and NeSI setup (read through if you haven't used this before!)
 
 # Current status
-*__This is setup and ready and has been run over Waikanae. The results for Waiakane are written in /nesi/project/niwa03440/cylc_test/029/geofabrics/hydrological_geofabric.nc__*
+*__This is setup and ready and has been run over Waikanae. The results for Waiakane are written in /nesi/project/niwa03440/cylc_test/029/ancill/geofabrics/hydrological_geofabric.nc__*
 
 # Session setup
 The following instructions are for getting Cylc 8 setup for a fresh session. Open a fresh bash terminal and run the following.
@@ -32,7 +32,7 @@ The following is a shell example for running the cylc workflow for creating a ge
 
 ```
 # Move to the waikanae example
-cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src/waikanae
+cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
 
 # Install, run and monitor the cylc workflow
 cylc validate . && cylc install && cylc play waikanae && cylc tui waikanae
@@ -52,7 +52,7 @@ The following will generate a png of the Waikanae Cylc workflow
 
 ```
 # Move to the project and basic scheduling example
-cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src/waikanae
+cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
 
 
 # Create a cylc graph from the cylc.flow file
