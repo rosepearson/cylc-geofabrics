@@ -17,6 +17,8 @@ The following instructions are for getting Cylc 8 setup for a fresh session. Ope
 module purge
 module load NeSI
 module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
+export PYTHONNOUSERSITE=1
 export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
 export CYLC_VERSION=8.0.3
 export PROJECT=niwa03440
