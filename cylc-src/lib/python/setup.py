@@ -20,29 +20,30 @@ def main():
     print("Run setup!")
 
     ## Define cylc paths
-    # note if calling python direct use: 'base_path = pathlib.Path().cwd()'
-    cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
+    # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd()'
+    #cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
+    cylc_run_base_path = pathlib.Path().cwd().parent.parent
     cylc_run_cache_path = cylc_run_base_path / "geofabrics_cache"
-    cyclc_run_inputs_path = cylc_run_base_path / "catchments"
+    cylc_run_inputs_path = cylc_run_base_path / "catchments"
     catchment_id = "029"
     
     ## Create results directory
     subfolder = "results"
     cylc_run_results_dir = cylc_run_cache_path / subfolder
-    cylc_run_results_dir.mkdir(parents=True, exist_ok=False)
+    cylc_run_results_dir.mkdir(parents=True, exist_ok=True)
     
     ## Define catchment boundary
-    catchment_boundary_path = cyclc_run_inputs_path / "catchments" / catchment_id + "_large.geojson"
+    catchment_boundary_path = cylc_run_inputs_path / "catchments" / f"{catchment_id}_large.geojson"
     
     ## Read in the parameter files
-    with open(cyclc_run_inputs_path / "parameters" / "global.json", "r") as file_pointer:
+    with open(cylc_run_inputs_path / "parameters" / "global.json", "r") as file_pointer:
         global_parameters = json.load(file_pointer)
-    with open(cyclc_run_inputs_path / "parameters" / catchment_id + ".json", "r") as file_pointer:
+    with open(cylc_run_inputs_path / "parameters" / f"{catchment_id}.json", "r") as file_pointer:
         catchment_parameters = json.load(file_pointer)
     
     ## Pull out global paths
     cache_path = pathlib.Path(global_parameters["shared"]["data_paths"].pop("global_cache"))
-    network_path = cache_path / instructions["rivers"]["rivers"].pop(network_file_relative_path)
+    network_path = cache_path / global_parameters["rivers"]["rivers"].pop("network_file_relative_path")
     
     ## Set global paths
     global_parameters["shared"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
@@ -74,9 +75,9 @@ def main():
     instructions["dem"] = {**instructions["dem"],**catchment_parameters["dem"]}
     instructions["roughness"] = {**instructions["roughness"],**catchment_parameters["roughness"]}
     ## TODO - may need to set above at each level of the dictionary
-    
+    print(instructions)
     ## Rivers specific setup
-    instructions["rivers"]["data_paths"]["land"] = f"river_catchment_{instructions["rivers"]["rivers"]["area_threshold"]}.geojson"
+    instructions["rivers"]["data_paths"]["land"] = f"river_catchment_{instructions['rivers']['rivers']['area_threshold']}.geojson"
     instructions["rivers"]["vector"]["linz"]["land"].pop()
     instructions["rivers"]["data_paths"]["catchment_boundary"].pop()
     
