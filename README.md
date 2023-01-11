@@ -35,7 +35,7 @@ The following is a shell example for running the cylc workflow for creating a ge
 cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
 
 # Install, run and monitor the cylc workflow
-cylc validate . && cylc install && cylc play waikanae && cylc tui waikanae
+cylc validate . && cylc install && cylc play cylc-src && cylc tui cylc-src
 
 # View outputs while `cylc cat-log -f o waikanae//runN/setup` is fixed
 cylc cat-log -f e waikanae//1/setup # Error output
