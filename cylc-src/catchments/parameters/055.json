@@ -1,5 +1,5 @@
 {
-    "shared": {"apis": {"open_topography": {"lidar": {"Wellington_2013": {"crs": {"horizontal": 2193, "vertical": 7839}}}}}},
+    "shared": {"apis": {"lidar": {"open_topography": {"Wellington_2013": {"crs": {"horizontal": 2193, "vertical": 7839}}}}}},
     "rivers": {"rivers": {"osm_id": 467336098, "area_threshold": 6308000000, "minimum_slope": 0.0005, "network_id": 12009639, "min_bank_height": 0.5,
                           "max_bank_height": 0.75, "cross_section_spacing": 10, "max_channel_width": 400, "min_channel_width": 50, "river_corridor_width": 500}}
 }

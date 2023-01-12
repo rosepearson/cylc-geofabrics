@@ -48,7 +48,7 @@ def main():
     ## Set global paths
     global_parameters["shared"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
     global_parameters["shared"]["data_paths"]["subfolder"] = subfolder
-    global_parameters["rivers"]["rivers"]["network_file"] = network_path
+    global_parameters["rivers"]["rivers"]["network_file"] = str(network_path)
     global_parameters["shared"]["data_paths"]["catchment_boundary"] = str(catchment_boundary_path)
     
     ## Add in the LINZ API key and add to the instruction file
@@ -70,22 +70,21 @@ def main():
     instructions["dem"] = {**instructions["dem"],**global_parameters["dem"]}
     instructions["roughness"] = {**instructions["roughness"],**global_parameters["roughness"]}
     # Add the stage specific catchment values
-    instructions["rivers"] = {**instructions["rivers"],**catchment_parameters["rivers"]}
-    instructions["waterways"] = {**instructions["waterways"],**catchment_parameters["waterways"]}
-    instructions["dem"] = {**instructions["dem"],**catchment_parameters["dem"]}
-    instructions["roughness"] = {**instructions["roughness"],**catchment_parameters["roughness"]}
+    for key in instructions.keys():
+        if key in catchment_parameters:
+            instructions[key] = {**instructions[key],**catchment_parameters[key]}
     ## TODO - may need to set above at each level of the dictionary
-    print(instructions)
+    
     ## Rivers specific setup
     instructions["rivers"]["data_paths"]["land"] = f"river_catchment_{instructions['rivers']['rivers']['area_threshold']}.geojson"
-    instructions["rivers"]["vector"]["linz"]["land"].pop()
-    instructions["rivers"]["data_paths"]["catchment_boundary"].pop()
+    instructions["rivers"]["apis"]["vector"]["linz"].pop("land")
+    instructions["rivers"]["data_paths"].pop("catchment_boundary")
     
     ## Roughness - set final output to global cache
     output_geofabric_path = cache_path / catchment_id / "ancil" / "bgflood" / "geofabrics" ## TODO consider pulling out into global - or an unversioned usecase specific json
     output_geofabric_path.parents[0].mkdir(parents=True, exist_ok=True)
-    instructions["roughness"]["data_paths"]["result_geofabric"] = output_geofabric_path / str(instructions["roughness"]["output"]["grid_params"]["resolution"]) + "_geofabric.nc"
-    
+    instructions["roughness"]["data_paths"]["result_geofabric"] = str(output_geofabric_path / f"{instructions['roughness']['output']['grid_params']['resolution']}_geofabric.nc")
+    print(instructions)
     
     ## write out the JSON instruction file
     with open(cylc_run_base_path / "instruction.json", "w") as json_file:
@@ -100,7 +99,7 @@ def main():
     ## Load in LiDAR files
     print("Download LiDAR files")
     lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=cylc_run_cache_path, search_polygon=catchment, verbose=True)
-    lidar_fetcher.run(next(iter(catchment_parameters["apis"]["open_topography"]["lidar"])))
+    lidar_fetcher.run(next(iter(catchment_parameters["shared"]["apis"]["lidar"]["open_topography"])))
     print("Finished setup!")
 
 
