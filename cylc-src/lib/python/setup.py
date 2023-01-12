@@ -68,7 +68,7 @@ def main():
     cylc_run_results_dir.mkdir(parents=True, exist_ok=True)
     
     ## Define catchment boundary
-    catchment_boundary_path = cylc_run_inputs_path / "catchments" / f"{catchment_id}_large.geojson"
+    catchment_boundary_path = cylc_run_inputs_path / "catchments" / f"{catchment_id}_small.geojson"
     
     ## Read in the parameter files
     with open(cylc_run_inputs_path / "parameters" / "global.json", "r") as file_pointer:
@@ -97,10 +97,7 @@ def main():
     # Populate with the global shared values
     shared = merge_dicts(dict_a=global_parameters["shared"], dict_b=catchment_parameters["shared"], replace_a=True)
     instructions = {"rivers": shared, "waterways": shared, "dem": shared, "roughness": shared}
-    print(instructions)
     # Add the stage specific global values
-    #instructions = merge(instructions, global_parameters)
-    #print(instructions)
     for key in instructions.keys():
         if key in global_parameters:
             instructions[key] = merge_dicts(instructions[key], global_parameters[key], replace_a=True)
@@ -124,12 +121,9 @@ def main():
     ## write out the JSON instruction file - TODO - may want to scrub the LINZ key info
     with open(cylc_run_base_path / "instruction.json", "w") as json_file:
         json.dump(instructions, json_file, indent=4)
-    return    
+     
     ## Load in catchment
-    crs = global_parameters["shared"]["output"]["crs"]["horizontal"]
     catchment = geopandas.read_file(catchment_boundary_path)
-    # TODO - Remove explicite override as CRS isn't being read in correctly.
-    catchment.set_crs(crs, inplace=True, allow_override=True) 
 
     ## Load in LiDAR files
     print("Download LiDAR files")
