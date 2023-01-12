@@ -10,7 +10,42 @@ import os
 import geoapis
 import geoapis.lidar
 import geopandas
+import copy
 
+def merge_dicts(dict_a: dict, dict_b: dict, replace_a: bool):
+    """ Merge the contents of the dict_a and dict_b. Use recursion to merge
+    any nested dictionaries. replace_a determines if the dict_a values are
+    replaced or not if different values are in the dict_b.
+    
+    Adapted from https://stackoverflow.com/questions/7204805/how-to-merge-dictionaries-of-dictionaries
+
+    Parameters:
+            base_dict  The dict to 
+            new_dict  The location of the centre of the river mouth
+            replace_a If True any dict_a values are replaced if different values are in dict_b
+    """
+    def recursive_merge_dicts(base_dict: dict, new_dict: dict, replace_base: bool, path: list = []):
+        """ Recurively add the new_dict into the base_dict. dict_a is mutable."""
+        for key in new_dict:
+            if key in base_dict:
+                if isinstance(base_dict[key], dict) and isinstance(new_dict[key], dict):
+                    recursive_merge_dicts(base_dict=base_dict[key], new_dict=new_dict[key], 
+                                          replace_base=replace_base, path=path + [str(key)])
+                elif base_dict[key] == new_dict[key]:
+                    pass # same leaf value
+                else:
+                    if replace_base:
+                        print(f"Conflict with both dictionaries containing different values at {path + [str(key)]}."
+                              " Value replaced.")
+                        base_dict[key] = new_dict[key]
+                    else:
+                        print(f"Conflict with both dictionaries containing different values at {path + [str(key)]}"
+                              ". Value ignored.")
+            else:
+                base_dict[key] = new_dict[key]
+        return base_dict
+    
+    return recursive_merge_dicts(copy.deepcopy(dict_a), dict_b, replace_base=replace_a)
 
 def main():
     """ The setup.main function updates the paths in the instruction file based
@@ -48,8 +83,8 @@ def main():
     ## Set global paths
     global_parameters["shared"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
     global_parameters["shared"]["data_paths"]["subfolder"] = subfolder
-    global_parameters["rivers"]["rivers"]["network_file"] = str(network_path)
     global_parameters["shared"]["data_paths"]["catchment_boundary"] = str(catchment_boundary_path)
+    global_parameters["rivers"]["rivers"]["network_file"] = str(network_path)
     
     ## Add in the LINZ API key and add to the instruction file
     # Load the LINZ API keys
@@ -60,20 +95,19 @@ def main():
 
     ## Create instruction file from the parameter files
     # Populate with the global shared values
-    instructions = {"rivers": global_parameters["shared"],
-                    "waterways": global_parameters["shared"],
-                    "dem": global_parameters["shared"],
-                    "roughness": global_parameters["shared"]}
+    shared = merge_dicts(dict_a=global_parameters["shared"], dict_b=catchment_parameters["shared"], replace_a=True)
+    instructions = {"rivers": shared, "waterways": shared, "dem": shared, "roughness": shared}
+    print(instructions)
     # Add the stage specific global values
-    instructions["rivers"] = {**instructions["rivers"],**global_parameters["rivers"]}
-    instructions["waterways"] = {**instructions["waterways"],**global_parameters["waterways"]}
-    instructions["dem"] = {**instructions["dem"],**global_parameters["dem"]}
-    instructions["roughness"] = {**instructions["roughness"],**global_parameters["roughness"]}
+    #instructions = merge(instructions, global_parameters)
+    #print(instructions)
+    for key in instructions.keys():
+        if key in global_parameters:
+            instructions[key] = merge_dicts(instructions[key], global_parameters[key], replace_a=True)
     # Add the stage specific catchment values
     for key in instructions.keys():
         if key in catchment_parameters:
-            instructions[key] = {**instructions[key],**catchment_parameters[key]}
-    ## TODO - may need to set above at each level of the dictionary
+            instructions[key] = merge_dicts(instructions[key], catchment_parameters[key], replace_a=True)
     
     ## Rivers specific setup
     instructions["rivers"]["data_paths"]["land"] = f"river_catchment_{instructions['rivers']['rivers']['area_threshold']}.geojson"
@@ -86,11 +120,10 @@ def main():
     instructions["roughness"]["data_paths"]["result_geofabric"] = str(output_geofabric_path / f"{instructions['roughness']['output']['grid_params']['resolution']}_geofabric.nc")
     print(instructions)
     
-    ## write out the JSON instruction file
+    ## write out the JSON instruction file - TODO - may want to scrub the LINZ key info
     with open(cylc_run_base_path / "instruction.json", "w") as json_file:
         json.dump(instructions, json_file, indent=4)
-    ## TODO - may want to scrub the LINZ key info
-        
+    return    
     ## Load in catchment
     crs = global_parameters["shared"]["output"]["crs"]["horizontal"]
     catchment = geopandas.read_file(catchment_boundary_path)
@@ -100,6 +133,7 @@ def main():
     print("Download LiDAR files")
     lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=cylc_run_cache_path, search_polygon=catchment, verbose=True)
     lidar_fetcher.run(next(iter(catchment_parameters["shared"]["apis"]["lidar"]["open_topography"])))
+    print(next(iter(catchment_parameters["shared"]["apis"]["lidar"]["open_topography"])))
     print("Finished setup!")
 
 

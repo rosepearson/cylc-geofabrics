@@ -9,7 +9,6 @@
                "rivers": {"veg_lidar_classifications_to_keep": [2, 3, 4, 5, 9],
                           "cross_section_spacing": 10,
                           "network_file_relative_path": "data/rec1_flow_and_friction.geojson",
-                          "network_file": "data/rec1_flow_and_friction.geojson",
                           "network_columns": {"id": "NZREACH", "to_node": "to_node", "from_node": "from_node", "flow": "flow", "mannings_n": "n", "area": "CATCHAREA"}}}, 
     "waterways": {"output": {"grid_params": {"resolution": 1}},
                   "processing": {"chunk_size": 2500}, 
