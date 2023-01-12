@@ -115,10 +115,11 @@ def main():
     instructions["rivers"]["data_paths"].pop("catchment_boundary")
     
     ## Roughness - set final output to global cache
-    output_geofabric_path = cache_path / catchment_id / "ancil" / "bgflood" / "geofabrics" ## TODO consider pulling out into global - or an unversioned usecase specific json
+    ## TODO consider pulling out into global - or an unversioned usecase specific json
+    output_geofabric_path = cache_path / catchment_id / "ancil" / "bgflood" / "geofabrics" 
     output_geofabric_path.parents[0].mkdir(parents=True, exist_ok=True)
-    instructions["roughness"]["data_paths"]["result_geofabric"] = str(output_geofabric_path / f"{instructions['roughness']['output']['grid_params']['resolution']}_geofabric.nc")
-    print(instructions)
+    instructions["roughness"]["data_paths"]["result_geofabric"] = str(output_geofabric_path / f"{instructions['roughness']['output']['grid_params']['resolution']}m_geofabric.nc")
+
     
     ## write out the JSON instruction file - TODO - may want to scrub the LINZ key info
     with open(cylc_run_base_path / "instruction.json", "w") as json_file:
@@ -127,7 +128,8 @@ def main():
     ## Load in catchment
     crs = global_parameters["shared"]["output"]["crs"]["horizontal"]
     catchment = geopandas.read_file(catchment_boundary_path)
-    catchment.set_crs(crs, inplace=True, allow_override=True) # TODO - Remove explicite override as CRS isn't being read in correctly.
+    # TODO - Remove explicite override as CRS isn't being read in correctly.
+    catchment.set_crs(crs, inplace=True, allow_override=True) 
 
     ## Load in LiDAR files
     print("Download LiDAR files")
