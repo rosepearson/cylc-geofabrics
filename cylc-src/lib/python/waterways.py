@@ -25,7 +25,7 @@ def main():
 
     # Launch the geofabrics processing routine
     runner = geofabrics.processor.WaterwayBedElevationEstimator(
-        instructions["drains"], debug=False
+        instructions["waterways"], debug=False
     )
     runner.run()
 
