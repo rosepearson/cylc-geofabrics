@@ -56,8 +56,7 @@ def main():
 
     ## Define cylc paths
     # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd()'
-    #cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
-    cylc_run_base_path = pathlib.Path().cwd().parent.parent
+    cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
     cylc_run_cache_path = cylc_run_base_path / "geofabrics_cache"
     cylc_run_inputs_path = cylc_run_base_path / "catchments"
     catchment_id = "029"
@@ -68,7 +67,7 @@ def main():
     cylc_run_results_dir.mkdir(parents=True, exist_ok=True)
     
     ## Define catchment boundary
-    catchment_boundary_path = cylc_run_inputs_path / "catchments" / f"{catchment_id}_small.geojson"
+    catchment_boundary_path = cylc_run_inputs_path / "catchments" / f"{catchment_id}_large.geojson"
     
     ## Read in the parameter files
     with open(cylc_run_inputs_path / "parameters" / "global.json", "r") as file_pointer:

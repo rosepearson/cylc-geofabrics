@@ -4,7 +4,7 @@
 [scheduling]
     [[graph]]
         R1 = """
-            setup => rivers & drains & lidar => dem => roughness
+            setup => rivers & waterways & lidar => dem => roughness
         """
 [runtime]
     [[root]]
@@ -41,9 +41,9 @@
             --ntasks = 4
             --job-name = rivers
             
-    [[drains]]
+    [[waterways]]
         # Run Python script
-        script = python -c 'import drains; drains.main()'
+        script = python -c 'import waterways; waterways.main()'
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
