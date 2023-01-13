@@ -3,6 +3,7 @@
 Run setup - download needed LiDAR files
 """
 
+import argparse
 import json
 import pathlib
 import dotenv
@@ -11,6 +12,24 @@ import geoapis
 import geoapis.lidar
 import geopandas
 import copy
+
+
+def parse_args():
+    """Expect a command line argument of the form:
+    '--catchment_id id_string'"""
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--catchment_id",
+        metavar="str",
+        required=True,
+        action="store",
+        help="the catchment id string - The ID of the catchment to run over. Will use the json file of that name.",
+    )
+
+    return parser.parse_args()
+
 
 def merge_dicts(dict_a: dict, dict_b: dict, replace_a: bool):
     """ Merge the contents of the dict_a and dict_b. Use recursion to merge
@@ -47,19 +66,17 @@ def merge_dicts(dict_a: dict, dict_b: dict, replace_a: bool):
     
     return recursive_merge_dicts(copy.deepcopy(dict_a), dict_b, replace_base=replace_a)
 
-def main():
-    """ The setup.main function updates the paths in the instruction file based
-    on the run location, and downloads all LiDAR data required for the later
-    GeoFabrics processing steps. """
+
+def setup_instructions(catchment_id: str):
+    """ The setup.setup_instructions function constructs the instruction file for the specified catchment. """
 
     print("Run setup!")
 
     ## Define cylc paths
-    # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd()'
+    # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd().parent.parent'
     cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
     cylc_run_cache_path = cylc_run_base_path / "geofabrics_cache"
     cylc_run_inputs_path = cylc_run_base_path / "catchments"
-    catchment_id = "029"
     
     ## Create results directory
     subfolder = "results"
@@ -67,7 +84,7 @@ def main():
     cylc_run_results_dir.mkdir(parents=True, exist_ok=True)
     
     ## Define catchment boundary
-    catchment_boundary_path = cylc_run_inputs_path / "catchments" / f"{catchment_id}_large.geojson"
+    catchment_boundary_path = cylc_run_inputs_path / "catchments" / f"{catchment_id}.geojson"
     
     ## Read in the parameter files
     with open(cylc_run_inputs_path / "parameters" / "global.json", "r") as file_pointer:
@@ -120,17 +137,14 @@ def main():
     ## write out the JSON instruction file - TODO - may want to scrub the LINZ key info
     with open(cylc_run_base_path / "instruction.json", "w") as json_file:
         json.dump(instructions, json_file, indent=4)
-     
-    ## Load in catchment
-    catchment = geopandas.read_file(catchment_boundary_path)
 
-    ## Load in LiDAR files
-    print("Download LiDAR files")
-    lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=cylc_run_cache_path, search_polygon=catchment, verbose=True)
-    lidar_fetcher.run(next(iter(catchment_parameters["shared"]["apis"]["lidar"]["open_topography"])))
-    print(next(iter(catchment_parameters["shared"]["apis"]["lidar"]["open_topography"])))
-    print("Finished setup!")
 
+def main():
+    """ Read in the args and launch the setup function"""
+    args = parse_args()
+    setup_instructions(catchment_id=args.catchment_id)
+    
 
 if __name__ == "__main__":
+    """If called as a script."""
     main()

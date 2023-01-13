@@ -4,7 +4,7 @@
 [scheduling]
     [[graph]]
         R1 = """
-            setup => rivers & waterways & lidar => dem => roughness
+            setup_catchment & setup_instruction => download_lidar => rivers & waterways & lidar => dem => roughness
         """
 [runtime]
     [[root]]
@@ -23,12 +23,24 @@
             --account = niwa03440
             --partition = nesi_prepost
 
-    [[setup]]
+    [[setup_catchment]]
         # Run Python script
-        script = python -c 'import setup; setup.main()'
+        script = python -c 'import setup_catchment; setup_catchment.main() --catchment_id 029'
 
         execution time limit = PT30M # A maximum expected execution time
 
+    [[setup_instruction]]
+        # Run Python script
+        script = python -c 'import setup_instruction; setup_instruction.main() --catchment_id 029'
+
+        execution time limit = PT30M # A maximum expected execution time
+
+    [[download_lidar]]
+        # Run Python script
+        script = python -c 'import download_lidar; download_lidar.main()'
+
+        execution time limit = PT30M # A maximum expected execution time
+        
     [[rivers]]
         # Run Python script
         script = python -c 'import rivers; rivers.main()'
