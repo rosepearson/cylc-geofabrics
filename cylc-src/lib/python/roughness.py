@@ -28,6 +28,7 @@ def main():
         instructions["roughness"]
     )
     runner.run()
+    print("Finished!")
 
 
 if __name__ == "__main__":

@@ -28,6 +28,7 @@ def main():
         instructions["waterways"], debug=False
     )
     runner.run()
+    print("Finished!")
 
 
 if __name__ == "__main__":

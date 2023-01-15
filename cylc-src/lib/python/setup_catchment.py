@@ -29,7 +29,7 @@ def setup_catchment(catchment_id: str):
     print(f"Run setup catchment for catchment {catchment_id}!")
 
     print("Currently does nothing in future will save bbox's of each catchment defined by https://git.niwa.co.nz/flood-resilience-aotearoa/create-flood-domains")
-    print("Finished setup!")
+    print("Finished!")
 
 
 def main():

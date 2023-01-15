@@ -137,6 +137,8 @@ def setup_instructions(catchment_id: str):
     ## write out the JSON instruction file - TODO - may want to scrub the LINZ key info
     with open(cylc_run_base_path / "instruction.json", "w") as json_file:
         json.dump(instructions, json_file, indent=4)
+    
+    print("Finished!")
 
 
 def main():
