@@ -18,7 +18,6 @@ def main():
     ## Define cylc paths
     # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd().parent.parent'
     cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
-    cylc_run_base_path = pathlib.Path().cwd().parent.parent
     
     ## Read in the instruction file
     with open(cylc_run_base_path / "instruction.json", "r") as file_pointer:
