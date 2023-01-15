@@ -4,7 +4,7 @@
 [scheduling]
     [[graph]]
         R1 = """
-            setup_catchment & setup_instruction => download_lidar => rivers & waterways & lidar => dem => roughness
+            setup_catchment & setup_instructions => download_lidar => rivers & waterways & lidar => dem => roughness
         """
 [runtime]
     [[root]]
@@ -25,13 +25,13 @@
 
     [[setup_catchment]]
         # Run Python script
-        script = python -c 'import setup_catchment; setup_catchment.main() --catchment_id 029'
+        script = python -c "import setup_catchment; setup_catchment.setup_catchment(catchment_id='029')
 
         execution time limit = PT30M # A maximum expected execution time
 
-    [[setup_instruction]]
+    [[setup_instructions]]
         # Run Python script
-        script = python -c 'import setup_instruction; setup_instruction.main() --catchment_id 029'
+        script = python -c "import setup_instructions; setup_instructions.setup_instructions(catchment_id='029')"
 
         execution time limit = PT30M # A maximum expected execution time
 
