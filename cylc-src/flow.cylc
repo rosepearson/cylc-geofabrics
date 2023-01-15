@@ -25,7 +25,7 @@
 
     [[setup_catchment]]
         # Run Python script
-        script = python -c "import setup_catchment; setup_catchment.setup_catchment(catchment_id='029')
+        script = python -c "import setup_catchment; setup_catchment.setup_catchment(catchment_id='029')"
 
         execution time limit = PT30M # A maximum expected execution time
 
