@@ -25,13 +25,19 @@
 
     [[setup_catchment]]
         # Run Python script
-        script = python -c "import setup_catchment; setup_catchment.setup_catchment(catchment_id='029')"
+        script = """
+                 catchment_id="'029'"
+                 python -c "import setup_catchment; setup_catchment.setup_catchment(catchment_id=$catchment_id)"
+                 """
 
         execution time limit = PT30M # A maximum expected execution time
 
     [[setup_instructions]]
         # Run Python script
-        script = python -c "import setup_instructions; setup_instructions.setup_instructions(catchment_id='029')"
+        script = """
+                 catchment_id="'029'"
+                 python -c "import setup_instructions; setup_instructions.setup_instructions(catchment_id=$catchment_id)"
+                 """
 
         execution time limit = PT30M # A maximum expected execution time
 
@@ -39,6 +45,7 @@
         # Run Python script
         script = python -c 'import download_lidar; download_lidar.main()'
 
+        execution retry delays = 2*PT1M # Incase conflict with creating the vector caches
         execution time limit = PT30M # A maximum expected execution time
         
     [[rivers]]
