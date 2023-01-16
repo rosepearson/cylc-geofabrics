@@ -11,6 +11,24 @@ import geoapis.vector
 import geopandas
 
 
+
+def parse_args():
+    """Expect a command line argument of the form:
+    '--catchment_id id_string'"""
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--catchment_id",
+        metavar="str",
+        required=True,
+        action="store",
+        help="the catchment id string - The ID of the catchment to run over. Will use the json file of that name.",
+    )
+
+    return parser.parse_args()
+
+
 def download_vector_layer(vector_instructions: dict, 
                           key: str, 
                           local_cache: str, 
@@ -27,18 +45,20 @@ def download_vector_layer(vector_instructions: dict,
         layer_dir.mkdir(parents=True, exist_ok=True)
         vector.to_file(layer_dir / f"{layer}.geojson")
 
-def main():
-    """ The download_lidar.main function downloads all LiDAR data required for the later
+
+def main(catchment_id: str):
+    """ The download all LiDAR and most vector data required for the later
     GeoFabrics processing steps. """
 
     print("Run setup!")
 
     ## Define cylc paths
     # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd().parent.parent'
-    cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
+    base_path = pathlib.Path().cwd().parent.parent.parent
+    catchment_path = base_path / "geofabrics_cache" / catchment_id
     
     ## Read in the instruction file
-    with open(cylc_run_base_path / "instruction.json", "r") as file_pointer:
+    with open(catchment_path / "instruction.json", "r") as file_pointer:
         instructions = json.load(file_pointer)
      
     ## Load in catchment
@@ -62,5 +82,6 @@ def main():
     
 
 if __name__ == "__main__":
-    """If called as a script."""
-    main()
+    """ If called as script: Read in the args and launch the main function"""
+    args = parse_args()
+    setup_instructions(catchment_id=args.catchment_id)

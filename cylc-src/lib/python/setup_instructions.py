@@ -67,7 +67,7 @@ def merge_dicts(dict_a: dict, dict_b: dict, replace_a: bool):
     return recursive_merge_dicts(copy.deepcopy(dict_a), dict_b, replace_base=replace_a)
 
 
-def setup_instructions(catchment_id: str):
+def main(catchment_id: str):
     """ The setup.setup_instructions function constructs the instruction file for the specified catchment. """
 
     print("Run setup!")
@@ -75,7 +75,7 @@ def setup_instructions(catchment_id: str):
     ## Define cylc paths
     # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd().parent.parent'
     cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
-    cylc_run_cache_path = cylc_run_base_path / "geofabrics_cache"
+    cylc_run_cache_path = cylc_run_base_path / "geofabrics_cache" / catchment_id
     cylc_run_inputs_path = cylc_run_base_path / "catchments"
     
     ## Create results directory
@@ -135,18 +135,13 @@ def setup_instructions(catchment_id: str):
 
     
     ## write out the JSON instruction file - TODO - may want to scrub the LINZ key info
-    with open(cylc_run_base_path / "instruction.json", "w") as json_file:
+    with open(cylc_run_cache_path / "instruction.json", "w") as json_file:
         json.dump(instructions, json_file, indent=4)
     
     print("Finished!")
 
 
-def main():
-    """ Read in the args and launch the setup function"""
+if __name__ == "__main__":
+    """ If called as script: Read in the args and launch the main function"""
     args = parse_args()
     setup_instructions(catchment_id=args.catchment_id)
-    
-
-if __name__ == "__main__":
-    """If called as a script."""
-    main()

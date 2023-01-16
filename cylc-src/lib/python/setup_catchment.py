@@ -22,7 +22,7 @@ def parse_args():
 
     return parser.parse_args()
 
-def setup_catchment(catchment_id: str):
+def main(catchment_id: str):
     """ The setup.setup_catchment function extracts and saves the 
     catchment polygon as a geojson with the catchment_id as its name. """
 
@@ -30,14 +30,9 @@ def setup_catchment(catchment_id: str):
 
     print("Currently does nothing in future will save bbox's of each catchment defined by https://git.niwa.co.nz/flood-resilience-aotearoa/create-flood-domains")
     print("Finished!")
-
-
-def main():
-    """ Read in the args and launch the setup function"""
-    args = parse_args()
-    setup_catchment(catchment_id=args.catchment_id)
     
 
 if __name__ == "__main__":
-    """If called as a script."""
-    main()
+    """ If called as script: Read in the args and launch the main function"""
+    args = parse_args()
+    setup_instructions(catchment_id=args.catchment_id)
