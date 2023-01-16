@@ -69,7 +69,7 @@ def main(catchment_id: str):
                                                  search_polygon=catchment, verbose=True)
     lidar_fetcher.run(next(iter(instructions["dem"]["apis"]["lidar"]["open_topography"])))
     
-    if "vector" in instructions["shared"]["apis"] or "linz" in instructions["shared"]["apis"]["vector"]
+    if "vector" in instructions["shared"]["apis"] or "linz" in instructions["shared"]["apis"]["vector"]:
         print("Download vector files")
         linz_vector_instruction = instructions["shared"]["apis"]["vector"]["linz"]
         for key in linz_vector_instruction:
