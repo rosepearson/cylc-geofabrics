@@ -55,6 +55,7 @@ def main(catchment_id: str):
     ## Define cylc paths
     # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd().parent.parent'
     base_path = pathlib.Path().cwd().parent.parent.parent
+    cache_path = base_path / "geofabrics_cache"
     
     ## Read in the instruction file
     with open(base_path / "catchments" / "parameters" / f"{catchment_id}.json", "r") as file_pointer:
@@ -76,7 +77,7 @@ def main(catchment_id: str):
             if key != "key":
                 download_vector_layer(vector_instructions=linz_vector_instruction, 
                                       key=key, 
-                                      local_cache=instructions["dem"]["data_paths"]["local_cache"],
+                                      local_cache=cache_path,
                                       catchment=catchment)
     print("Finished!")
     
