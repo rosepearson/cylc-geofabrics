@@ -52,4 +52,4 @@ def main(catchment_id: str):
 if __name__ == "__main__":
     """ If called as script: Read in the args and launch the main function"""
     args = parse_args()
-    setup_instructions(catchment_id=args.catchment_id)
+    main(catchment_id=args.catchment_id)

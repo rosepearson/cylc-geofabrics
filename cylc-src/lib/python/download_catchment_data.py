@@ -55,34 +55,33 @@ def main(catchment_id: str):
     ## Define cylc paths
     # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd().parent.parent'
     base_path = pathlib.Path().cwd().parent.parent.parent
-    catchment_path = base_path / "geofabrics_cache" / catchment_id
     
     ## Read in the instruction file
-    with open(catchment_path / "instruction.json", "r") as file_pointer:
+    with open(base_path / "catchments" / "parameters" / f"{catchment_id}.json", "r") as file_pointer:
         instructions = json.load(file_pointer)
      
     ## Load in catchment
-    catchment = geopandas.read_file(instructions["dem"]["data_paths"]["catchment_boundary"])
+    catchment = geopandas.read_file(base_path / "catchments" / "catchments" / f"{catchment_id}.geojson")
 
     ## Load in LiDAR files
     print("Download LiDAR files")
-    lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=instructions["dem"]["data_paths"]["local_cache"], 
+    lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=instructions["shared"]["data_paths"]["local_cache"], 
                                                  search_polygon=catchment, verbose=True)
     lidar_fetcher.run(next(iter(instructions["dem"]["apis"]["lidar"]["open_topography"])))
     
-    print("Download vector files")
-    # TODO - download vectors for all of NZ (i.e. no catchment) to avoid future conflict between catchments
-    linz_vector_instruction = instructions["dem"]["apis"]["vector"]["linz"]
-    download_vector_layer(vector_instructions=linz_vector_instruction, key="land", 
-                          local_cache=instructions["dem"]["data_paths"]["local_cache"],
-                          catchment=catchment)
-    download_vector_layer(vector_instructions=linz_vector_instruction, key="bathymetry_contours",
-                          local_cache=instructions["dem"]["data_paths"]["local_cache"],
-                          catchment=catchment)
+    if "vector" in instructions["shared"]["apis"] or "linz" in instructions["shared"]["apis"]["vector"]
+        print("Download vector files")
+        linz_vector_instruction = instructions["shared"]["apis"]["vector"]["linz"]
+        for key in linz_vector_instruction:
+            if key != "key":
+                download_vector_layer(vector_instructions=linz_vector_instruction, 
+                                      key=key, 
+                                      local_cache=instructions["dem"]["data_paths"]["local_cache"],
+                                      catchment=catchment)
     print("Finished!")
     
 
 if __name__ == "__main__":
     """ If called as script: Read in the args and launch the main function"""
     args = parse_args()
-    setup_instructions(catchment_id=args.catchment_id)
+    main(catchment_id=args.catchment_id)
