@@ -25,7 +25,7 @@ def download_vector_layer(vector_instructions: dict,
         # Ensure directory for layer and save vector file
         layer_dir = pathlib.Path(local_cache) / "vector"
         layer_dir.mkdir(parents=True, exist_ok=True)
-        vector.to_file(layer_dir / f"{key}.geojson")
+        vector.to_file(layer_dir / f"{layer}.geojson")
 
 def main():
     """ The download_lidar.main function downloads all LiDAR data required for the later

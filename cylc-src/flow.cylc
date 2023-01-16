@@ -4,7 +4,7 @@
 [scheduling]
     [[graph]]
         R1 = """
-            setup_catchment & setup_instructions => download_lidar => rivers & waterways & lidar => dem => roughness
+            setup_catchment & setup_instructions => download_data => rivers & waterways & lidar => dem => roughness
         """
 [runtime]
     [[root]]
@@ -16,6 +16,9 @@
                     conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
         """
+        
+        [[[environment]]]
+            catchment_id="'029'"
 
         platform = maui-cs-slurm  # Run "cylc config" to see platforms - used mahuika-slurm previously
  
@@ -25,27 +28,20 @@
 
     [[setup_catchment]]
         # Run Python script
-        script = """
-                 catchment_id="'029'"
-                 python -c "import setup_catchment; setup_catchment.setup_catchment(catchment_id=$catchment_id)"
-                 """
+        script = python -c "import setup_catchment; setup_catchment.setup_catchment(catchment_id=$catchment_id)"
 
         execution time limit = PT30M # A maximum expected execution time
 
     [[setup_instructions]]
         # Run Python script
-        script = """
-                 catchment_id="'029'"
-                 python -c "import setup_instructions; setup_instructions.setup_instructions(catchment_id=$catchment_id)"
-                 """
+        script = python -c "import setup_instructions; setup_instructions.setup_instructions(catchment_id=$catchment_id)"
 
         execution time limit = PT30M # A maximum expected execution time
 
-    [[download_lidar]]
+    [[download_data]]
         # Run Python script
-        script = python -c 'import download_lidar; download_lidar.main()'
+        script = python -c 'import download_data; download_data.main()'
 
-        execution retry delays = 2*PT1M # Incase conflict with creating the vector caches
         execution time limit = PT30M # A maximum expected execution time
         
     [[rivers]]
