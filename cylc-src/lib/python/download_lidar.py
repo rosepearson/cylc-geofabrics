@@ -23,7 +23,7 @@ def download_vector_layer(vector_instructions: dict,
         vector = fetcher.run(layer)
 
         # Ensure directory for layer and save vector file
-        layer_dir = pathlib.Path(local_cache) / str(layer)
+        layer_dir = pathlib.Path(local_cache) / "vector"
         layer_dir.mkdir(parents=True, exist_ok=True)
         vector.to_file(layer_dir / f"{key}.geojson")
 
