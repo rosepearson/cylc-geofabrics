@@ -75,12 +75,11 @@ def main(catchment_id: str):
     ## Define cylc paths
     # note if calling python direct use: 'cylc_run_base_path = pathlib.Path().cwd().parent.parent'
     cylc_run_base_path = pathlib.Path().cwd().parent.parent.parent
-    cylc_run_cache_path = cylc_run_base_path / "geofabrics_cache" / catchment_id
+    cylc_run_cache_path = cylc_run_base_path / "geofabrics_cache"
     cylc_run_inputs_path = cylc_run_base_path / "catchments"
     
     ## Create results directory
-    subfolder = "results"
-    cylc_run_results_dir = cylc_run_cache_path / subfolder
+    cylc_run_results_dir = cylc_run_cache_path / catchment_id
     cylc_run_results_dir.mkdir(parents=True, exist_ok=True)
     
     ## Define catchment boundary
@@ -98,7 +97,7 @@ def main(catchment_id: str):
     
     ## Set global paths
     global_parameters["shared"]["data_paths"]["local_cache"] = str(cylc_run_cache_path)
-    global_parameters["shared"]["data_paths"]["subfolder"] = subfolder
+    global_parameters["shared"]["data_paths"]["subfolder"] = catchment_id
     global_parameters["shared"]["data_paths"]["catchment_boundary"] = str(catchment_boundary_path)
     global_parameters["rivers"]["rivers"]["network_file"] = str(network_path)
     
@@ -135,7 +134,7 @@ def main(catchment_id: str):
 
     
     ## write out the JSON instruction file - TODO - may want to scrub the LINZ key info
-    with open(cylc_run_cache_path / "instruction.json", "w") as json_file:
+    with open(cylc_run_cache_path / catchment_id / "instruction.json", "w") as json_file:
         json.dump(instructions, json_file, indent=4)
     
     print("Finished!")

@@ -46,7 +46,7 @@
         
     [[rivers]]
         # Run Python script
-        script = python -c 'import rivers; rivers.main(catchment_id=$catchment_id)'
+        script = python -c "import rivers; rivers.main(catchment_id=$catchment_id)"
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time

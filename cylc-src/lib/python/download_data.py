@@ -71,13 +71,14 @@ def main(catchment_id: str):
     lidar_fetcher.run(next(iter(instructions["dem"]["apis"]["lidar"]["open_topography"])))
     
     print("Download vector files")
+    # TODO - download vectors for all of NZ (i.e. no catchment) to avoid future conflict between catchments
     linz_vector_instruction = instructions["dem"]["apis"]["vector"]["linz"]
     download_vector_layer(vector_instructions=linz_vector_instruction, key="land", 
                           local_cache=instructions["dem"]["data_paths"]["local_cache"],
-                         catchment=catchment)
+                          catchment=catchment)
     download_vector_layer(vector_instructions=linz_vector_instruction, key="bathymetry_contours",
                           local_cache=instructions["dem"]["data_paths"]["local_cache"],
-                         catchment=catchment)
+                          catchment=catchment)
     print("Finished!")
     
 
