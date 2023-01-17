@@ -66,9 +66,10 @@ def main(catchment_id: str):
 
     ## Load in LiDAR files
     print("Download LiDAR files")
-    lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=instructions["shared"]["data_paths"]["local_cache"], 
-                                                 search_polygon=catchment, verbose=True)
-    lidar_fetcher.run(next(iter(instructions["dem"]["apis"]["lidar"]["open_topography"])))
+    lidar_fetcher = geoapis.lidar.OpenTopography(cache_path=cache_path, 
+                                                 search_polygon=catchment,
+                                                 verbose=True)
+    lidar_fetcher.run(next(iter(instructions["shared"]["apis"]["lidar"]["open_topography"])))
     
     if "vector" in instructions["shared"]["apis"] or "linz" in instructions["shared"]["apis"]["vector"]:
         print("Download vector files")
