@@ -7,7 +7,7 @@ Table of contents:
 * Initial Cylc and NeSI setup (read through if you haven't used this before!)
 
 # Current status
-*__This is setup and ready and has been run over Waikanae. The results for Waiakane are written in /nesi/project/niwa03440/cylc_test/029/geofabrics/hydrological_geofabric.nc__*
+*__This is setup and ready and has been run over Waikanae. The results for Waiakane are written in /nesi/project/niwa03440/cylc_test/029/ancill/geofabrics/hydrological_geofabric.nc__*
 
 # Session setup
 The following instructions are for getting Cylc 8 setup for a fresh session. Open a fresh bash terminal and run the following.
@@ -17,8 +17,10 @@ The following instructions are for getting Cylc 8 setup for a fresh session. Ope
 module purge
 module load NeSI
 module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
+export PYTHONNOUSERSITE=1
 export PATH=/opt/nesi/share/cylc/etc/bin:$PATH
-export CYLC_VERSION=8.0rc3
+export CYLC_VERSION=8.0.3
 export PROJECT=niwa03440
 ```
 
@@ -30,17 +32,14 @@ The following is a shell example for running the cylc workflow for creating a ge
 
 ```
 # Move to the waikanae example
-cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src/waikanae
+cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
 
 # Install, run and monitor the cylc workflow
-cylc validate . # Check for errors and correct as needed
-cylc install
-cylc play waikanae
-cylc tui waikanae
+cylc validate . && cylc install && cylc play cylc-src && cylc tui cylc-src
 
-# View outputs while `cylc cat-log -f o waikanae//runN/setup` is fixed
-cylc cat-log -f e waikanae//1/setup # Error output
-cylc cat-log -f o waikanae//1/setup # Output
+# View outputs 
+cylc cat-log -f e cylc-src//1/setup # Error output
+cylc cat-log -f o cylc-src//1/setup # Output
 cat /home/pearsonra/cylc-run/waikanae/runN/log/job/1/setup/NN/job.out
 
 # Clean runs
@@ -53,7 +52,7 @@ The following will generate a png of the Waikanae Cylc workflow
 
 ```
 # Move to the project and basic scheduling example
-cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src/waikanae
+cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
 
 
 # Create a cylc graph from the cylc.flow file
@@ -83,7 +82,7 @@ Note you will need all folders only to have read access and you will need to set
 Once you have configued your SSH key, make sure to check you have access to the w-cylc01, w-cylc02, and w-cylc03 nodes. If you don't have access request permission as described in [Cylc 8 on Maui - One NIWA](https://one.niwa.co.nz/pages/viewpage.action?spaceKey=HPCF&title=Cylc+8+on+Maui).
 
 ## Cylc global.cylc setup
-If you are running Cylc on an interative session on Mahuika accessed via the JupyterHub portal, you will need to explicitly ensure the w-cylc01 .. 03 nodes are avaliable. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/8.0rc3/global.cylc`. 
+If you are running Cylc on an interative session on Mahuika accessed via the JupyterHub portal, you will need to explicitly ensure the w-cylc01 .. 03 nodes are avaliable. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/global.cylc`. 
 
 ```
 	[scheduler]
@@ -91,7 +90,7 @@ If you are running Cylc on an interative session on Mahuika accessed via the Jup
 	        available = w-cylc01, w-cylc02, w-cylc03
 ```
 
-You may also need to explicitly add a mahuika platform if it does not show up as one of the listed platforms when you run `cylc config`. This is particularly nessecary if you NIWA/NeSI project only has permission to run on Mahuika and not Maui. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/8.0rc3/global.cylc`. 
+You may also need to explicitly add a mahuika platform if it does not show up as one of the listed platforms when you run `cylc config`. This is particularly nessecary if you NIWA/NeSI project only has permission to run on Mahuika and not Maui. This can be done by adding the following to a global.cylc file located in `~/.cylc/flow/8.0.3/global.cylc`. 
 
 ```
 [platforms]
@@ -108,16 +107,31 @@ Currently the flow relies on a conda environment being created before running cy
 Execute the following in the bash terminal. Check there are no errors. Note that the environment is created in a shared location so it may be accessed by others working on the niwa03440 project.
 
 ```
-# Setup conda environment
+set +u
+module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
+conda config --add pkgs_dirs /nesi/nobackup/niwa03440/$USER/conda_pkgs
 cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
-conda env create -f environment.yml -p /nesi/project/niwa03440/conda/envs/geofabrics
-
+conda env create -f geofabrics.yml -p /nesi/project/niwa03440/conda/envs/geofabrics
+conda activate /nesi/project/niwa03440/conda/envs/geofabrics
+set -u
 ```
 
-A note on removing environments if they need to be recreated: `conda remove --name geofabrics --all`
+### Clean up Environments
+A note on removing environments if they need to be recreated: 
+
+```
+set +u
+module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
+conda remove --all -p /nesi/project/niwa03440/conda/envs/geofabrics
+```
 
 ## LINZ API key
 The LINZ Data Service (LDS) requires an API key. This is stored in a `.env` file in `cylc-geofabrics/cylc-src/waikanae/.env` on NeSI, but it is not versioned as that would be a security risk. Refer to [this page](https://github.com/rosepearson/GeoFabrics/wiki/Testing-and-GitHub-Actions) if you need to generate a new `.env` file.
+
+# Trouble shooting
+If the workflow is failing at the scheduler stage (i.e. doesn't run any of the tasks) it may be because the Python environment has been polluted (i.e. you acidentially installed into Conda base). Check for `~/.local/lib` and delete unless you are sure you need the amendments.
 
 
 # Todo
