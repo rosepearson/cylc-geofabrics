@@ -1,5 +1,9 @@
+#!Jinja2
 # Runs through the GeoFabrics workflow for a single catchment.
 # Notes - call "cylc config" to see avaliable platforms
+
+
+{% set CATCHMENT_IDS = "'029'", "'055'" %}
 
 [scheduling]
     [[graph]]
@@ -16,9 +20,6 @@
                     conda activate /nesi/project/niwa03440/conda/envs/geofabrics
                     set -u
         """
-        
-        [[[environment]]]
-            catchment_id="'029'"
 
         platform = maui-cs-slurm  # Run "cylc config" to see platforms - used mahuika-slurm previously
  
@@ -32,28 +33,28 @@
 
         execution time limit = PT30M # A maximum expected execution time
 
-
+{% for CATCHMENT_ID in CATCHMENT_IDS %}
     [[setup_catchment]]
         # Run Python script
-        script = python -c "import setup_catchment; setup_catchment.main(catchment_id=$catchment_id)"
+        script = python -c "import setup_catchment; setup_catchment.main(catchment_id={{ CATCHMENT_ID }})"
 
         execution time limit = PT30M # A maximum expected execution time
 
     [[setup_instructions]]
         # Run Python script
-        script = python -c "import setup_instructions; setup_instructions.main(catchment_id=$catchment_id)"
+        script = python -c "import setup_instructions; setup_instructions.main(catchment_id={{ CATCHMENT_ID }})"
 
         execution time limit = PT30M # A maximum expected execution time
 
     [[download_catchment_data]]
         # Run Python script
-        script = python -c "import download_catchment_data; download_catchment_data.main(catchment_id=$catchment_id)"
+        script = python -c "import download_catchment_data; download_catchment_data.main(catchment_id={{ CATCHMENT_ID }})"
 
         execution time limit = PT30M # A maximum expected execution time
         
     [[rivers]]
         # Run Python script
-        script = python -c "import rivers; rivers.main(catchment_id=$catchment_id)"
+        script = python -c "import rivers; rivers.main(catchment_id={{ CATCHMENT_ID }})"
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
@@ -65,7 +66,7 @@
             
     [[waterways]]
         # Run Python script
-        script = python -c "import waterways; waterways.main(catchment_id=$catchment_id)"
+        script = python -c "import waterways; waterways.main(catchment_id={{ CATCHMENT_ID }})"
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
@@ -77,7 +78,7 @@
             
     [[lidar]]
         # Run Python script
-        script = python -c "import lidar; lidar.main(catchment_id=$catchment_id)"
+        script = python -c "import lidar; lidar.main(catchment_id={{ CATCHMENT_ID }})"
         
         execution time limit = PT4H # A maximum expected execution time
 
@@ -88,7 +89,7 @@
             
     [[dem]]
         # Run Python script
-        script = python -c "import dem; dem.main(catchment_id=$catchment_id)"
+        script = python -c "import dem; dem.main(catchment_id={{ CATCHMENT_ID }})"
         
         execution time limit = PT1H # A maximum expected execution time
 
@@ -99,7 +100,7 @@
             
     [[roughness]]
         # Run Python script
-        script = python -c "import roughness; roughness.main(catchment_id=$catchment_id)"
+        script = python -c "import roughness; roughness.main(catchment_id={{ CATCHMENT_ID }})"
         
         execution time limit = PT4H # A maximum expected execution time
 
@@ -107,3 +108,4 @@
             --mem-per-cpu = 8G
             --ntasks = 8
             --job-name = roughness
+{% endfor %}
