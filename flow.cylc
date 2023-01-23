@@ -8,7 +8,10 @@
 [scheduling]
     [[graph]]
         R1 = """
-            download_global_data => setup_catchment & setup_instructions => download_catchment_data => rivers & waterways & lidar => dem => roughness
+            download_global_data 
+            {% for CATCHMENT_ID in CATCHMENT_IDS %}
+            setup_catchment & setup_instructions => download_catchment_data => rivers & waterways & lidar => dem => roughness
+            {% endfor %}
         """
 [runtime]
     [[root]]
