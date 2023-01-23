@@ -31,11 +31,11 @@ If you want to try things out without running over the full Waikanae catchment, 
 The following is a shell example for running the cylc workflow for creating a geofabric for Waikanae. 
 
 ```
-# Move to the waikanae example
-cd /nesi/project/niwa03440/cylc-geofabrics/cylc-src
+# Move to the cylc flow
+cd /nesi/project/niwa03440/cylc-geofabrics
 
 # Install, run and monitor the cylc workflow
-cylc validate . && cylc install && cylc play cylc-src && cylc tui cylc-src
+cylc validate . && cylc install && cylc play cylc-geofabrics && cylc tui cylc-geofabrics
 
 # View outputs 
 cylc cat-log -f e cylc-src//1/setup # Error output
