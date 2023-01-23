@@ -38,8 +38,8 @@ cd /nesi/project/niwa03440/cylc-geofabrics
 cylc validate . && cylc install && cylc play cylc-geofabrics && cylc tui cylc-geofabrics
 
 # View outputs 
-cylc cat-log -f e cylc-src//1/setup # Error output
-cylc cat-log -f o cylc-src//1/setup # Output
+cylc cat-log -f e cylc-geofabrics//1/setup_catchment # Error output
+cylc cat-log -f o cylc-geofabrics//1/setup_catchment # Output
 cat /home/pearsonra/cylc-run/waikanae/runN/log/job/1/setup/NN/job.out
 
 # Clean runs
