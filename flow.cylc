@@ -3,15 +3,18 @@
 # Notes - call "cylc config" to see avaliable platforms
 
 
-{% set CATCHMENT_IDS = "'029'", "'055'" %}
+{% set CATCHMENT_IDS = '029', '055' %}
 
 [scheduling]
     [[graph]]
         R1 = """
-            download_global_data 
-            {% for CATCHMENT_ID in CATCHMENT_IDS %}
-            setup_catchment & setup_instructions => download_catchment_data => rivers & waterways & lidar => dem => roughness
-            {% endfor %}
+            download_global_data =>
+    {% for CATCHMENT_ID in CATCHMENT_IDS %}
+            setup_catchment_{{ CATCHMENT_ID }} & setup_instructions_{{ CATCHMENT_ID }} => 
+            download_catchment_data_{{ CATCHMENT_ID }} => rivers_{{ CATCHMENT_ID }} & waterways_{{ CATCHMENT_ID }} & lidar_{{ CATCHMENT_ID }} => 
+            dem_{{ CATCHMENT_ID }} => 
+            roughness_{{ CATCHMENT_ID }}
+    {% endfor %}
         """
 [runtime]
     [[root]]
@@ -37,27 +40,27 @@
         execution time limit = PT30M # A maximum expected execution time
 
 {% for CATCHMENT_ID in CATCHMENT_IDS %}
-    [[setup_catchment]]
+    [[setup_catchment_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import setup_catchment; setup_catchment.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import setup_catchment; setup_catchment.main(catchment_id='{{ CATCHMENT_ID }}')"
 
         execution time limit = PT30M # A maximum expected execution time
 
-    [[setup_instructions]]
+    [[setup_instructions_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import setup_instructions; setup_instructions.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import setup_instructions; setup_instructions.main(catchment_id='{{ CATCHMENT_ID }}')"
 
         execution time limit = PT30M # A maximum expected execution time
 
-    [[download_catchment_data]]
+    [[download_catchment_data_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import download_catchment_data; download_catchment_data.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import download_catchment_data; download_catchment_data.main(catchment_id='{{ CATCHMENT_ID }}')"
 
         execution time limit = PT30M # A maximum expected execution time
         
-    [[rivers]]
+    [[rivers_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import rivers; rivers.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import rivers; rivers.main(catchment_id='{{ CATCHMENT_ID }}')"
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
@@ -67,9 +70,9 @@
             --ntasks = 4
             --job-name = rivers
             
-    [[waterways]]
+    [[waterways_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import waterways; waterways.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import waterways; waterways.main(catchment_id='{{ CATCHMENT_ID }}')"
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
         execution time limit = PT1H # A maximum expected execution time
@@ -79,9 +82,9 @@
             --ntasks = 4
             --job-name = drains
             
-    [[lidar]]
+    [[lidar_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import lidar; lidar.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import lidar; lidar.main(catchment_id='{{ CATCHMENT_ID }}')"
         
         execution time limit = PT4H # A maximum expected execution time
 
@@ -90,9 +93,9 @@
             --ntasks = 8
             --job-name = lidar
             
-    [[dem]]
+    [[dem_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import dem; dem.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import dem; dem.main(catchment_id='{{ CATCHMENT_ID }}')"
         
         execution time limit = PT1H # A maximum expected execution time
 
@@ -101,9 +104,9 @@
             --ntasks = 1
             --job-name = dem
             
-    [[roughness]]
+    [[roughness_{{ CATCHMENT_ID }}]]
         # Run Python script
-        script = python -c "import roughness; roughness.main(catchment_id={{ CATCHMENT_ID }})"
+        script = python -c "import roughness; roughness.main(catchment_id='{{ CATCHMENT_ID }}')"
         
         execution time limit = PT4H # A maximum expected execution time
 
