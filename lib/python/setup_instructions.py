@@ -129,7 +129,7 @@ def main(catchment_id: str):
     ## Roughness - set final output to global cache
     ## TODO consider pulling out into global - or an unversioned usecase specific json
     output_geofabric_path = cache_path / catchment_id / "ancil" / "bgflood" / "geofabrics" 
-    output_geofabric_path.parents[0].mkdir(parents=True, exist_ok=True)
+    output_geofabric_path.parents[0].mkdir(0o755, parents=True, exist_ok=True)
     instructions["roughness"]["data_paths"]["result_geofabric"] = str(output_geofabric_path / f"{instructions['roughness']['output']['grid_params']['resolution']}m_geofabric.nc")
 
     
