@@ -1,5 +1,6 @@
 {
     "shared": {"data_paths": {"global_cache": "/nesi/project/niwa03440/cylc_test/"},
+               "processing": { "number_of_cores": 20, "memory_limit": "20GiB" },
                "output": {"crs": {"horizontal": 2193, "vertical": 7839}},
                "apis": {"vector": {"linz": {"land": {"layers": [51559]}, "bathymetry_contours": {"layers": [50849]}}}},
                "general": {"bathymetry_contours_z_label": "valdco", "lidar_classifications_to_keep": [2, 9]}},

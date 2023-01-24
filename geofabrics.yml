@@ -11,8 +11,8 @@ dependencies:
   - rasterio # Needs to be explicit as wheel fails to build if insalled as a dependency of geofabrics
   - python-pdal # Not on PyPI so needs to be added here and not through pip geofabrics
   - pip:
-    - geoapis>=0.3.1
-    - geofabrics>=0.10.7
+    - geoapis>=0.3.2
+    - geofabrics>=0.10.11
     - dask[complete]
 
 prefix: /nesi/project/niwa03440/conda/envs/geofabrics

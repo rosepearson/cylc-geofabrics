@@ -66,8 +66,8 @@
         execution time limit = PT1H # A maximum expected execution time
         
         [[[directives]]]
-            --mem-per-cpu = 8G
-            --ntasks = 4
+            --mem-per-cpu = 20G
+            --ntasks = 20
             --job-name = rivers
             
     [[waterways_{{ CATCHMENT_ID }}]]
@@ -78,8 +78,8 @@
         execution time limit = PT1H # A maximum expected execution time
 
         [[[directives]]]
-            --mem-per-cpu = 8G
-            --ntasks = 4
+            --mem-per-cpu = 20G
+            --ntasks = 20
             --job-name = drains
             
     [[lidar_{{ CATCHMENT_ID }}]]
@@ -89,8 +89,8 @@
         execution time limit = PT4H # A maximum expected execution time
 
         [[[directives]]]
-            --mem-per-cpu = 8G
-            --ntasks = 8
+            --mem-per-cpu = 20G
+            --ntasks = 20
             --job-name = lidar
             
     [[dem_{{ CATCHMENT_ID }}]]
@@ -100,7 +100,7 @@
         execution time limit = PT1H # A maximum expected execution time
 
         [[[directives]]]
-            --mem-per-cpu = 8G
+            --mem-per-cpu = 20G
             --ntasks = 1
             --job-name = dem
             
@@ -111,7 +111,7 @@
         execution time limit = PT4H # A maximum expected execution time
 
         [[[directives]]]
-            --mem-per-cpu = 8G
-            --ntasks = 8
+            --mem-per-cpu = 20G
+            --ntasks = 20
             --job-name = roughness
 {% endfor %}
