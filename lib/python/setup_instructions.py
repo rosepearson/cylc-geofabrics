@@ -130,6 +130,7 @@ def main(catchment_id: str):
     ## TODO consider pulling out into global - or an unversioned usecase specific json
     output_geofabric_path = cache_path / catchment_id / "ancil" / "bgflood" / "geofabrics" 
     output_geofabric_path.mkdir(0o755, parents=True, exist_ok=True)
+    os.system(f"chgrp niwa03440 -R {str(cache_path / catchment_id)}")
     instructions["roughness"]["data_paths"]["result_geofabric"] = str(output_geofabric_path / f"{instructions['roughness']['output']['grid_params']['resolution']}m_geofabric.nc")
 
     
