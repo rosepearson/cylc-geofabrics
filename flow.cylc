@@ -56,14 +56,14 @@
         # Run Python script
         script = python -c "import download_catchment_data; download_catchment_data.main(catchment_id='{{ CATCHMENT_ID }}')"
 
-        execution time limit = PT30M # A maximum expected execution time
+        execution time limit = PT1H # A maximum expected execution time
         
     [[rivers_{{ CATCHMENT_ID }}]]
         # Run Python script
         script = python -c "import rivers; rivers.main(catchment_id='{{ CATCHMENT_ID }}')"
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
-        execution time limit = PT1H # A maximum expected execution time
+        execution time limit = PT4H # A maximum expected execution time
         
         [[[directives]]]
             --mem-per-cpu = 20G
@@ -75,7 +75,7 @@
         script = python -c "import waterways; waterways.main(catchment_id='{{ CATCHMENT_ID }}')"
         
         execution retry delays = 3*PT1M # Incase the OSM HTTPS query fails first time
-        execution time limit = PT1H # A maximum expected execution time
+        execution time limit = PT4H # A maximum expected execution time
 
         [[[directives]]]
             --mem-per-cpu = 20G
@@ -97,7 +97,7 @@
         # Run Python script
         script = python -c "import dem; dem.main(catchment_id='{{ CATCHMENT_ID }}')"
         
-        execution time limit = PT1H # A maximum expected execution time
+        execution time limit = PT4H # A maximum expected execution time
 
         [[[directives]]]
             --mem-per-cpu = 20G
